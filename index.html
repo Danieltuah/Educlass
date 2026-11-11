@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduClass | Interactive Learning Platform</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6fb;
+  color: #172b4d;
+}
+
+header {
+  background: #173b68;
+  color: white;
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 25px;
+}
+
+header span {
+  font-size: 12px;
+  color: #d5e6ff;
+}
+
+.container {
+  display: flex;
+  min-height: calc(100vh - 75px);
+}
+
+nav {
+  width: 240px;
+  background: white;
+  padding: 25px 15px;
+  border-right: 1px solid #e5eaf1;
+}
+
+nav p {
+  font-size: 11px;
+  color: #8995a7;
+  margin: 15px 10px;
+  font-weight: bold;
+}
+
+nav button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 13px;
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #40516a;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+nav button:hover,
+nav button.active {
+  background: #eaf1fb;
+  color: #174b85;
+  font-weight: bold;
+}
+
+main {
+  flex: 1;
+  padding: 35px;
+  min-width: 0;
+}
+
+.welcome {
+  margin-bottom: 28px;
+}
+
+.welcome h2 {
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  color: #718096;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 17px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 13px;
+  padding: 22px;
+  border: 1px solid #e7ebf1;
+}
+
+.card .emoji {
+  font-size: 27px;
+  margin-bottom: 13px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.card p {
+  color: #7b8798;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.section {
+  background: white;
+  border-radius: 13px;
+  padding: 25px;
+  border: 1px solid #e7ebf1;
+  margin-bottom: 20px;
+}
+
+.section h3 {
+  margin-bottom: 15px;
+}
+
+.module {
+  background: #f0f5fc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.module button {
+  background: #174b85;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 11px 18px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.module button:hover {
+  background: #0e3159;
+}
+
+#content {
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #8995a7;
+  font-size: 12px;
+}
+
+@media(max-width:700px) {
+  .container {
+    display: block;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+  }
+
+  nav p {
+    display: none;
+  }
+
+  nav button {
+    min-width: max-content;
+    width: auto;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  header {
+    padding: 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <h1>EDUCLASS</h1>
+    <span>Interactive Learning Platform</span>
+  </div>
+  <span>SEJARAH DIGITAL</span>
+</header>
+
+<div class="container">
+
+<nav>
+  <p>MENU UTAMA</p>
+  <button class="active" onclick="showPage('home',this)">🏠 Dashboard</button>
+  <button onclick="showPage('notes',this)">📚 Nota Pembelajaran</button>
+  <button onclick="showPage('explore',this)">🔎 Penerokaan</button>
+  <button onclick="showPage('develop',this)">🏗️ Pengembangan</button>
+  <button onclick="showPage('games',this)">🎮 Permainan</button>
+  <button onclick="showPage('practice',this)">📝 Latihan</button>
+  <button onclick="showPage('upload',this)">📤 Hantar Tugasan</button>
+  <p>PEMANTAUAN</p>
+  <button onclick="showPage('assessment',this)">📊 Penilaian</button>
+</nav>
+
+<main>
+<div id="content">
+
+<div class="welcome">
+  <h2>Selamat Datang ke EduClass!</h2>
+  <p>Teroka ilmu, bina pengalaman dan cipta pembelajaran bermakna.</p>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <div class="emoji">📚</div>
+    <h3>Nota</h3>
+    <p>Akses bahan pembelajaran dan nota digital.</p>
+  </div>
+
+  <div class="card">
+    <div class="emoji">🔎</div>
+    <h3>Penerokaan</h3>
+    <p>Teroka dunia sejarah melalui aktiviti interaktif.</p>
+  </div>
+
+  <div class="card">
+    <div class="emoji">🎮</div>
+    <h3>Permainan</h3>
+    <p>Belajar melalui permainan pendidikan.</p>
+  </div>
+
+  <div class="card">
+    <div class="emoji">📊</div>
+    <h3>Penilaian</h3>
+    <p>Lihat pencapaian dan perkembangan pembelajaran.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Modul Pembelajaran Terkini</h3>
+  <div class="module">
+    <h3>🏺 Zaman Prasejarah</h3>
+    <p>Sejarah Tingkatan 1</p>
+    <p>Kenali ciri-ciri kehidupan manusia pada empat zaman prasejarah.</p>
+    <button onclick="showPage('notes',document.querySelectorAll('nav button')[1])">
+      Teroka Modul →
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Perjalanan Pembelajaran</h3>
+  <p>1. Penerangan dan nota</p>
+  <p>2. Penerokaan artifak</p>
+  <p>3. Pengembangan – Bina Zaman Prasejarah</p>
+  <p>4. Latihan dan penilaian</p>
+</div>
+
+</div>
+</main>
+</div>
+
+<footer>
+  EDUCLASS © 2026 | Interactive Learning Platform
+</footer>
+
+<script>
+function showPage(page,button) {
+  const content = document.getElementById("content");
+
+  document.querySelectorAll("nav button").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  if(button) button.classList.add("active");
+
+  const pages = {
+    home: `<h2>Selamat Datang ke EduClass!</h2>
+      <p>Platform pembelajaran digital Sejarah.</p>`,
+
+    notes: `<h2>📚 Nota Pembelajaran</h2>
+      <p>Nota dan bahan pembelajaran Zaman Prasejarah akan ditempatkan di sini.</p>`,
+
+    explore: `<h2>🔎 Penerokaan</h2>
+      <p>Aktiviti Misi Detektif Arkeologi akan ditempatkan di sini.</p>`,
+
+    develop: `<h2>🏗️ Pengembangan</h2>
+      <p>Aktiviti Bina Zaman Prasejarah akan ditempatkan di sini.</p>`,
+
+    games: `<h2>🎮 Permainan</h2>
+      <p>Game HTML5 akan diintegrasikan di sini.</p>`,
+
+    practice: `<h2>📝 Latihan</h2>
+      <p>Latihan objektif dan soalan KBAT akan ditempatkan di sini.</p>`,
+
+    upload: `<h2>📤 Hantar Tugasan</h2>
+      <p>Ruang penghantaran poster dan hasil kerja murid akan dibangunkan di sini.</p>`,
+
+    assessment: `<h2>📊 Dashboard Penilaian</h2>
+      <p>Markah, refleksi dan perkembangan murid akan dipaparkan di sini.</p>`
+  };
+
+  content.innerHTML = pages[page] || pages.home;
+}
+</script>
+
+</body>
+</html>
