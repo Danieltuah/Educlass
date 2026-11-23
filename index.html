@@ -301,6 +301,23 @@ input,textarea {
   .hero { padding:25px; min-height:240px }
   .hero::after { right:-10px; top:35px; font-size:140px }
   .timeline { grid-template-columns:repeat(2,1fr) }
+} 
+  .gallery-card,
+.exhibit-card {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.gallery-card:hover,
+.exhibit-card:hover {
+  transform: translateY(-3px);
+  border-color: #bc8c43;
+  background: #fffaf2;
+}
+
+.museum-active {
+  border-color: #bc8c43 !important;
+  background: #fffaf2 !important;
 }
 </style>
 </head>
@@ -409,11 +426,33 @@ input,textarea {
 
 <section id="nota" class="page">
   <div class="hero">
-    <div class="overline">PERPUSTAKAAN DIGITAL</div>
-    <h1>Nota Zaman Prasejarah</h1>
-    <p>Kenali perubahan cara hidup dan teknologi manusia merentas empat zaman.</p>
+    <div class="overline">MUZIUM PRASEJARAH DIGITAL</div>
+    <h1>Nota Interaktif Bab 3: Zaman Prasejarah</h1>
+    <p>Klik galeri dan objek pameran untuk meneroka nota secara interaktif seperti berada di muzium dunia nyata.</p>
   </div>
-  <div class="grid" id="nota-list"></div>
+
+  <div class="panel">
+    <h3>🏛 Pilih Galeri</h3>
+    <p class="muted">Klik mana-mana galeri untuk membuka ruang pameran.</p>
+
+    <div class="grid" id="museum-gallery-list"></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>🧭 Ruang Pameran Interaktif</h3>
+      <p class="muted" id="museum-subtitle">Pilih galeri terlebih dahulu.</p>
+      <div id="museum-exhibits" class="grid"></div>
+    </div>
+
+    <div class="panel">
+      <h3>📜 Panel Nota</h3>
+      <div class="notice" id="museum-note-title">Belum ada objek dipilih.</div>
+      <div id="museum-note-content" class="muted">
+        Klik galeri terlebih dahulu, kemudian pilih objek pameran untuk melihat nota.
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="penerokaan" class="page">
@@ -511,33 +550,108 @@ input,textarea {
 </div>
 
 <script>
-const notes = [
-  {
-    name:"Paleolitik",icon:"🪨",
-    info:"Manusia menggunakan peralatan batu awal, memburu dan mengumpulkan makanan. Sesetengah komuniti menggunakan gua atau naungan semula jadi sebagai perlindungan."
-  },
-  {
-    name:"Mesolitik",icon:"🏹",
-    info:"Manusia menyesuaikan kehidupan dengan persekitaran, termasuk menggunakan sumber sungai dan pesisir serta peralatan batu yang lebih khusus di sesetengah kawasan."
-  },
-  {
-    name:"Neolitik",icon:"🏺",
-    info:"Perkembangan pertanian, penternakan, tembikar dan petempatan lebih kekal berlaku dalam pelbagai komuniti."
-  },
-  {
-    name:"Zaman Logam",icon:"⚒️",
-    info:"Penggunaan peralatan gangsa dan besi serta perkembangan pertukangan dan pertukaran barangan berlaku mengikut tempat dan masa."
-  }
-];
 
-document.getElementById("nota-list").innerHTML =
-  notes.map(n=>`
-    <div class="card">
-      <div class="symbol">${n.icon}</div>
-      <h3>${n.name}</h3>
-      <p>${n.info}</p>
+const museumData = {
+  maksud: {
+    title: "3.1 Maksud Zaman Prasejarah",
+    icon: "⏳",
+    exhibits: [
+      ["📜", "Maksud Prasejarah", "Zaman sebelum manusia mengetahui dan mengenal sistem tulisan. Bukti kehidupan dikaji melalui tinggalan arkeologi."],
+      ["🪨", "Zaman Batu", "Terbahagi kepada Paleolitik, Mesolitik dan Neolitik. Peralatan batu menjadi salah satu ciri utama perkembangan teknologi."],
+      ["⚒️", "Zaman Logam", "Manusia menghasilkan peralatan daripada logam, termasuk gangsa dan besi."]
+    ]
+  },
+  lokasi: {
+    title: "3.2 Lokasi Zaman Prasejarah di Dunia",
+    icon: "🌍",
+    exhibits: [
+      ["🗺️", "Tapak Prasejarah Dunia", "Tapak arkeologi di pelbagai benua membuktikan kewujudan dan perkembangan masyarakat prasejarah."],
+      ["🏕️", "Tapak Petempatan", "Penemuan tempat tinggal, perkakas dan sisa makanan membantu ahli arkeologi mengkaji cara hidup manusia awal."],
+      ["🔎", "Bukti Arkeologi", "Fosil, artifak dan tinggalan struktur memberi maklumat tentang kehidupan pada masa lampau."]
+    ]
+  },
+  ciri: {
+    title: "3.3 Ciri-ciri Kehidupan Manusia",
+    icon: "🏕️",
+    exhibits: [
+      ["🏠", "Tempat Kediaman", "Manusia prasejarah menggunakan gua, kawasan terbuka dan tempat perlindungan. Petempatan lebih kekal berkembang apabila kegiatan menghasilkan makanan semakin meluas."],
+      ["🪓", "Peralatan", "Peralatan berkembang daripada batu yang ringkas kepada peralatan yang lebih halus dan penggunaan logam."],
+      ["🌾", "Kegiatan Ekonomi", "Kegiatan merangkumi memburu, menangkap ikan, mengumpulkan makanan, pertanian, penternakan dan pertukaran barangan."],
+      ["👥", "Organisasi Sosial", "Organisasi sosial berkembang daripada kelompok kecil kepada komuniti yang lebih tersusun."],
+      ["🍎", "Pengumpulan Makanan", "Pada peringkat awal, manusia mengumpulkan hasil hutan dan sumber semula jadi. Pertanian dan penternakan kemudian mengurangkan pergantungan kepada pengumpulan makanan."],
+      ["🌀", "Kepercayaan", "Amalan pengebumian dan objek tertentu memberikan petunjuk tentang kepercayaan masyarakat prasejarah."],
+      ["🎨", "Kesenian dan Kebudayaan", "Lukisan gua, tembikar, perhiasan dan pelbagai hasil seni memperlihatkan kreativiti masyarakat prasejarah."]
+    ]
+  },
+  sumbangan: {
+    title: "3.4 Kesinambungan Sumbangan Prasejarah",
+    icon: "🏺",
+    exhibits: [
+      ["🌱", "Pertanian", "Kegiatan pertanian yang berkembang sejak zaman prasejarah menjadi asas kepada penghasilan makanan hingga hari ini."],
+      ["🐐", "Penternakan", "Penternakan membolehkan manusia mendapatkan sumber makanan dan kegunaan lain daripada haiwan."],
+      ["🔨", "Peralatan", "Penciptaan alat membantu kerja harian dan menjadi asas perkembangan teknologi."],
+      ["🏺", "Tembikar", "Tembikar digunakan untuk tujuan seperti menyimpan dan menyediakan makanan."],
+      ["🌀", "Ideofak", "Ideofak berkaitan dengan hasil pemikiran, kepercayaan dan amalan masyarakat."],
+      ["🏛️", "Seni Bina", "Pembinaan petempatan dan struktur menunjukkan perkembangan kemahiran manusia membina tempat perlindungan."]
+    ]
+  },
+  malaysia: {
+    title: "3.5 Zaman Prasejarah di Malaysia",
+    icon: "🇲🇾",
+    exhibits: [
+      ["📍", "Tapak Prasejarah", "Penemuan tapak arkeologi di Malaysia membuktikan kewujudan manusia prasejarah di negara kita."],
+      ["🪨", "Teknologi", "Penemuan peralatan batu dan logam menunjukkan perkembangan kemahiran menghasilkan alat."],
+      ["🏺", "Tinggalan Arkeologi", "Artifak, rangka manusia, tembikar dan lukisan gua membantu penyelidik memahami kehidupan masyarakat."],
+      ["🌾", "Kegiatan Ekonomi", "Kegiatan seperti memburu, menangkap ikan, mengumpulkan sumber alam dan pertanian memenuhi keperluan kehidupan."],
+      ["🌀", "Kepercayaan", "Bukti pengebumian dan objek yang ditemui memberikan gambaran tentang kepercayaan masyarakat prasejarah."]
+    ]
+  }
+};
+
+function renderMuseumGalleries() {
+  const area = document.getElementById("museum-gallery-list");
+  if (!area) return;
+
+  area.innerHTML = Object.entries(museumData).map(([key, g]) => `
+    <div class="card gallery-card" onclick="openGallery('${key}')">
+      <div class="symbol">${g.icon}</div>
+      <h3>${g.title}</h3>
+      <p>Klik untuk memasuki galeri →</p>
     </div>
   `).join("");
+}
+
+function openGallery(key) {
+  const gallery = museumData[key];
+
+  document.getElementById("museum-subtitle").textContent = gallery.title;
+
+  document.getElementById("museum-exhibits").innerHTML =
+    gallery.exhibits.map((item, index) => `
+      <div class="card exhibit-card" onclick="openExhibit('${key}',${index})">
+        <div class="symbol">${item[0]}</div>
+        <h3>${item[1]}</h3>
+        <p>Sentuh objek untuk membuka nota.</p>
+      </div>
+    `).join("");
+
+  document.getElementById("museum-note-title").textContent =
+    "🔒 Nota belum dibuka";
+
+  document.getElementById("museum-note-content").textContent =
+    "Klik salah satu objek pameran untuk membaca nota.";
+}
+
+function openExhibit(key, index) {
+  const item = museumData[key].exhibits[index];
+
+  document.getElementById("museum-note-title").textContent =
+    item[0] + " " + item[1];
+
+  document.getElementById("museum-note-content").textContent = item[2];
+}
+
+renderMuseumGalleries();
 
 function go(id,button) {
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
@@ -555,8 +669,11 @@ function go(id,button) {
 
 function eraInfo(era) {
   go("nota");
-  const selected = notes.find(n=>n.name===era || (era==="Logam"&&n.name==="Zaman Logam"));
-  if(selected) alert(selected.name+": "+selected.info);
+  openGallery("ciri");
+
+  document.getElementById("museum-subtitle").textContent =
+    "Anda memilih Zaman " + era +
+    ". Klik objek pameran untuk meneroka ciri kehidupan manusia.";
 }
 
 function artifact(name,info) {
