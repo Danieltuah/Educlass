@@ -193,6 +193,25 @@ button:disabled {
       Sedang menyemak akaun murid...
     </div>
 
+<div id="myClasses" class="hidden"
+     style="margin-top:20px">
+
+  <h2>📚 Kelas Saya</h2>
+
+  <div id="myClassList"></div>
+
+  <a href="index.html"
+     id="enterEduclass"
+     class="hidden"
+     style="display:block;text-align:center;
+            margin-top:20px;padding:15px;
+            background:#d8a75b;color:#102235;
+            border-radius:11px;font-weight:700">
+    🚀 Masuk ke EduClass
+  </a>
+
+</div>
+
     <form id="joinForm" class="hidden">
 
       <label for="joinCode">Kod Jemputan Kelas</label>
@@ -259,6 +278,59 @@ function showNotice(text, type = "") {
 
 // SEMAK AKAUN MURID
 
+async function loadMyClasses() {
+  const { data, error } = await db.rpc(
+    "educlass_my_classes"
+  );
+
+  if (error) {
+    showNotice(
+      "Gagal memuatkan kelas: " + error.message,
+      "error"
+    );
+    return;
+  }
+
+  const classes = data || [];
+
+  if (classes.length === 0) {
+    joinForm.classList.remove("hidden");
+    return;
+  }
+
+  const container =
+    document.getElementById("myClassList");
+
+  container.replaceChildren();
+
+  classes.forEach(c => {
+    const card = document.createElement("div");
+
+    card.style.cssText =
+      "padding:16px;margin:10px 0;" +
+      "background:#203b50;border-radius:12px;";
+
+    const title = document.createElement("strong");
+    title.textContent = c.name;
+
+    const level = document.createElement("p");
+    level.textContent =
+      "Tingkatan " + c.form_level;
+
+    card.append(title, level);
+    container.appendChild(card);
+  });
+
+  document.getElementById("myClasses")
+    .classList.remove("hidden");
+
+  document.getElementById("enterEduclass")
+    .classList.remove("hidden");
+
+  // Murid masih boleh menyertai kelas tambahan
+  joinForm.classList.remove("hidden");
+}
+
 async function initialize() {
   try {
     const { data, error } = await db.auth.getUser();
@@ -307,7 +379,7 @@ async function initialize() {
       "success"
     );
 
-    joinForm.classList.remove("hidden");
+    await loadMyClasses();
 
   } catch (error) {
     showNotice(
