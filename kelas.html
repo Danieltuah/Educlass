@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>EduClass | Pengurusan Kelas Guru</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #0d1827;
+  --panel: #17293d;
+  --panel2: #20374e;
+  --gold: #e7b35f;
+  --text: #f6f1e8;
+  --muted: #a9bdcf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  padding: 22px 5%;
+  background: #122235;
+  border-bottom: 1px solid #394858;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  color: var(--gold);
+}
+
+header a {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+main {
+  max-width: 1150px;
+  margin: auto;
+  padding: 35px 22px 70px;
+}
+
+.kicker {
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(27px, 4vw, 40px);
+  margin: 13px 0;
+}
+
+.description {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid #425468;
+  border-radius: 18px;
+  padding: 25px;
+}
+
+.status {
+  padding: 16px;
+  border-radius: 12px;
+  background: #253b51;
+  border: 1px solid #52657c;
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+
+.status.error {
+  background: #522c38;
+  border-color: #c4777e;
+}
+
+.status.success {
+  background: #203f39;
+  border-color: #4b987a;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 25px 0;
+}
+
+.stat {
+  background: var(--panel2);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #40556b;
+}
+
+.stat strong {
+  display: block;
+  color: var(--gold);
+  font-size: 30px;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 14px;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px;
+  background: #0d1d2d;
+  border: 1px solid #57687b;
+  border-radius: 10px;
+  color: white;
+  font: inherit;
+}
+
+input:focus, select:focus {
+  outline: 2px solid var(--gold);
+}
+
+button {
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.primary {
+  background: var(--gold);
+  color: #152638;
+  padding: 14px;
+  border: 0;
+  border-radius: 11px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.secondary {
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 9px;
+  padding: 10px 13px;
+}
+
+.small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.class-list {
+  display: grid;
+  gap: 14px;
+}
+
+.class-item {
+  padding: 20px;
+  border-radius: 13px;
+  background: var(--panel2);
+  border: 1px solid #425a70;
+}
+
+.class-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.class-title {
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.level {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.code-area {
+  margin-top: 16px;
+  padding: 12px;
+  background: #102133;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.code {
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: var(--gold);
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  text-align: center;
+  padding: 45px 15px;
+  color: var(--muted);
+}
+
+@media (max-width: 750px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⏳ EDUCLASS</div>
+  <a href="index.html">← Kembali ke EduClass</a>
+</header>
+
+<main>
+
+  <div class="kicker">PORTAL PENGURUSAN GURU</div>
+  <h1>Pengurusan Kelas</h1>
+
+  <p class="description">
+    Cipta dan urus pelbagai kelas pembelajaran.
+    Setiap kelas mempunyai kod jemputan tersendiri
+    untuk kegunaan murid.
+  </p>
+
+  <div id="status" class="status">
+    Sedang menyemak akaun guru...
+  </div>
+
+  <div id="dashboard" class="hidden">
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="totalClasses">0</strong>
+        <span>Jumlah Kelas</span>
+      </div>
+
+      <div class="stat">
+        <strong id="totalLevels">0</strong>
+        <span>Tingkatan Berbeza</span>
+      </div>
+
+      <div class="stat">
+        <strong>Aktif</strong>
+        <span>Status Akaun Guru</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <section class="card">
+        <h2>🏫 Cipta Kelas Baharu</h2>
+
+        <p class="small">
+          Daftarkan kelas yang kau ajar.
+          Kod jemputan akan dijana secara automatik.
+        </p>
+
+        <form id="createForm">
+
+          <label for="className">Nama Kelas</label>
+          <input
+            id="className"
+            maxlength="80"
+            placeholder="Contoh: Amanah"
+            required
+          >
+
+          <label for="formLevel">Tingkatan</label>
+          <select id="formLevel" required>
+            <option value="1">Tingkatan 1</option>
+            <option value="2">Tingkatan 2</option>
+            <option value="3">Tingkatan 3</option>
+            <option value="4">Tingkatan 4</option>
+            <option value="5">Tingkatan 5</option>
+          </select>
+
+          <button class="primary" id="createBtn" type="submit">
+            + Cipta Kelas
+          </button>
+
+        </form>
+      </section>
+
+      <section class="card">
+
+        <div class="heading">
+          <h2 style="margin:0">📚 Kelas Saya</h2>
+
+          <button
+            type="button"
+            class="secondary"
+            id="refreshBtn">
+            Muat Semula
+          </button>
+        </div>
+
+        <div id="classList" class="class-list">
+          <div class="empty">
+            Memuatkan senarai kelas...
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+// SAMBUNGAN SUPABASE EDUCLASS
+
+const SUPABASE_URL =
+  "https://phlrzzmnqzdelqdrkiei.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Ok2XXcUUCPtpdWp_btmRhw_ddlBjLmi";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentUser = null;
+let classes = [];
+
+const statusBox = document.getElementById("status");
+const dashboard = document.getElementById("dashboard");
+
+function showStatus(message, type = "") {
+  statusBox.textContent = message;
+  statusBox.className = "status " + type;
+  statusBox.classList.remove("hidden");
+}
+
+function makeElement(tag, className, text) {
+  const el = document.createElement(tag);
+
+  if (className) {
+    el.className = className;
+  }
+
+  if (text !== undefined) {
+    el.textContent = text;
+  }
+
+  return el;
+}
+
+// SEMAK AKAUN GURU
+
+async function initialize() {
+  try {
+    const { data, error } = await db.auth.getUser();
+
+    if (error) throw error;
+
+    if (!data.user) {
+      showStatus(
+        "Sila log masuk terlebih dahulu melalui Portal Login EduClass."
+      );
+      return;
+    }
+
+    currentUser = data.user;
+
+    const profileResult = await db
+      .from("profiles")
+      .select("full_name, role")
+      .eq("id", currentUser.id)
+      .single();
+
+    if (profileResult.error) {
+      throw profileResult.error;
+    }
+
+    const profile = profileResult.data;
+
+    if (!["teacher", "admin"].includes(profile.role)) {
+      showStatus(
+        "Akses ditolak. Halaman ini hanya untuk akaun guru."
+      );
+      return;
+    }
+
+    const teacherName =
+      profile.full_name || currentUser.email;
+
+    dashboard.classList.remove("hidden");
+
+    showStatus(
+      "Selamat datang, " + teacherName +
+      "! Akaun guru telah disahkan.",
+      "success"
+    );
+
+    await loadClasses();
+
+  } catch (error) {
+    showStatus(
+      "Gagal memuatkan akaun guru: " + error.message,
+      "error"
+    );
+  }
+}
+
+// CIPTA KELAS MENGGUNAKAN RPC SUPABASE
+
+document.getElementById("createForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const name =
+      document.getElementById("className").value.trim();
+
+    const formLevel = Number(
+      document.getElementById("formLevel").value
+    );
+
+    if (name.length < 2) {
+      showStatus(
+        "Nama kelas mesti mempunyai sekurang-kurangnya 2 aksara.",
+        "error"
+      );
+      return;
+    }
+
+    const btn = document.getElementById("createBtn");
+
+    btn.disabled = true;
+    btn.textContent = "Sedang mencipta kelas...";
+
+    try {
+      const { data, error } = await db.rpc(
+        "educlass_create_class",
+        {
+          p_name: name,
+          p_form_level: formLevel
+        }
+      );
+
+      if (error) throw error;
+
+      document.getElementById("createForm").reset();
+
+      showStatus(
+        "Kelas " + data.name +
+        " berjaya dicipta! Kod jemputan: " +
+        data.join_code,
+        "success"
+      );
+
+      await loadClasses();
+
+    } catch (error) {
+      showStatus(
+        "Gagal mencipta kelas: " + error.message,
+        "error"
+      );
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "+ Cipta Kelas";
+    }
+  });
+
+// AMBIL SENARAI KELAS MILIK GURU
+
+async function loadClasses() {
+  if (!currentUser) return;
+
+  const list = document.getElementById("classList");
+
+  list.replaceChildren(
+    makeElement("div", "empty", "Memuatkan kelas...")
+  );
+
+  const { data, error } = await db
+    .from("classes")
+    .select("id, name, form_level, join_code, created_at")
+    .eq("teacher_id", currentUser.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    list.replaceChildren();
+
+    showStatus(
+      "Gagal mendapatkan kelas: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  classes = data || [];
+
+  document.getElementById("totalClasses")
+    .textContent = classes.length;
+
+  const levels = new Set(
+    classes.map(c => c.form_level)
+  );
+
+  document.getElementById("totalLevels")
+    .textContent = levels.size;
+
+  renderClasses();
+}
+
+// PAPARKAN KAD KELAS
+
+function renderClasses() {
+  const list = document.getElementById("classList");
+
+  list.replaceChildren();
+
+  if (classes.length === 0) {
+    list.appendChild(
+      makeElement(
+        "div",
+        "empty",
+        "Belum ada kelas. Cipta kelas pertama di sebelah kiri."
+      )
+    );
+    return;
+  }
+
+  classes.forEach(c => {
+    const card = makeElement("div", "class-item");
+
+    const top = makeElement("div", "class-top");
+    const info = makeElement("div");
+
+    info.appendChild(
+      makeElement("div", "class-title", c.name)
+    );
+
+    info.appendChild(
+      makeElement(
+        "span",
+        "level",
+        "TINGKATAN " + c.form_level
+      )
+    );
+
+    top.appendChild(info);
+    card.appendChild(top);
+
+    const area = makeElement("div", "code-area");
+    const codeInfo = makeElement("div");
+
+    codeInfo.appendChild(
+      makeElement("div", "small", "KOD JEMPUTAN")
+    );
+
+    codeInfo.appendChild(
+      makeElement("div", "code", c.join_code)
+    );
+
+    area.appendChild(codeInfo);
+
+    const copyBtn = makeElement(
+      "button",
+      "secondary",
+      "Salin Kod"
+    );
+
+    copyBtn.type = "button";
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(
+          c.join_code
+        );
+
+        showStatus(
+          "Kod jemputan " + c.name +
+          " berjaya disalin.",
+          "success"
+        );
+
+      } catch (error) {
+        showStatus(
+          "Tidak dapat menyalin secara automatik. " +
+          "Sila salin kod yang dipaparkan.",
+          "error"
+        );
+      }
+    });
+
+    area.appendChild(copyBtn);
+    card.appendChild(area);
+    list.appendChild(card);
+  });
+}
+
+// MUAT SEMULA MANUAL
+
+document.getElementById("refreshBtn")
+  .addEventListener("click", loadClasses);
+
+// MULAKAN APLIKASI
+
+initialize();
+</script>
+
+</body>
+</html>
