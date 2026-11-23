@@ -373,7 +373,7 @@ const { data, error } = await db.auth.signUp({
 
         if (error) throw error;
 
-        await showLoggedIn(data.user);
+       await showLoggedIn(data.user, true);
       }
 
     } catch (error) {
@@ -391,7 +391,7 @@ const { data, error } = await db.auth.signUp({
     }
   });
 
-async function showLoggedIn(user) {
+async function showLoggedIn(user, autoRedirect = false) {
   if (!user) return;
 
   document.getElementById("authForm").style.display = "none";
@@ -412,6 +412,23 @@ async function showLoggedIn(user) {
 
   document.getElementById("userRole").textContent =
     "Peranan: " + roleText;
+
+const destination =
+  roleText === "teacher" || roleText === "admin"
+    ? "kelas.html"
+    : roleText === "student"
+      ? "sertai-kelas.html"
+      : null;
+
+if (destination) {
+  document.querySelector("#loggedIn a.primary").href =
+    destination;
+
+  if (autoRedirect) {
+    window.location.replace(destination);
+    return;
+  }
+}
 
   message.style.display = "none";
 }
