@@ -3,329 +3,596 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduClass | Interactive Learning Platform</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduClass | History Quest</title>
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap');
 
+:root {
+  --navy:#172638;
+  --navy2:#243b50;
+  --gold:#bc8c43;
+  --cream:#f8f4eb;
+  --ink:#293648;
+  --muted:#7b8390;
+}
+* { box-sizing:border-box }
 body {
-  background: #f4f6fb;
-  color: #172b4d;
+  margin:0;
+  background:#f4f1e9;
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
 }
-
-header {
-  background: #173b68;
-  color: white;
-  padding: 22px 6%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+button { cursor:pointer; font:inherit }
+.layout { display:flex; min-height:100vh }
+.sidebar {
+  width:255px;
+  background:var(--navy);
+  color:white;
+  padding:26px 18px;
+  flex-shrink:0;
 }
-
-header h1 {
-  font-size: 25px;
+.logo {
+  color:#f4dca6;
+  font:800 25px Cinzel,serif;
+  padding:10px 12px 26px;
 }
-
-header span {
-  font-size: 12px;
-  color: #d5e6ff;
+.logo small {
+  display:block;
+  color:#a9b8c5;
+  font:11px 'DM Sans',sans-serif;
+  margin-top:7px;
+  letter-spacing:1px;
 }
-
-.container {
-  display: flex;
-  min-height: calc(100vh - 75px);
+.menu-label {
+  font-size:10px;
+  letter-spacing:2px;
+  color:#98aabd;
+  margin:22px 12px 11px;
+  font-weight:800;
 }
-
-nav {
-  width: 240px;
-  background: white;
-  padding: 25px 15px;
-  border-right: 1px solid #e5eaf1;
+.nav-btn {
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  margin-bottom:5px;
+  border:0;
+  border-radius:11px;
+  color:#d9e3ed;
+  background:transparent;
+  transition:.2s;
 }
-
-nav p {
-  font-size: 11px;
-  color: #8995a7;
-  margin: 15px 10px;
-  font-weight: bold;
+.nav-btn:hover,.nav-btn.active {
+  background:#34485c;
+  color:#f8d69a;
 }
-
-nav button {
-  width: 100%;
-  border: none;
-  background: transparent;
-  padding: 13px;
-  text-align: left;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #40516a;
-  margin-bottom: 5px;
-  font-size: 14px;
+.main {
+  padding:25px 35px 45px;
+  flex:1;
+  min-width:0;
 }
-
-nav button:hover,
-nav button.active {
-  background: #eaf1fb;
-  color: #174b85;
-  font-weight: bold;
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:23px;
+  gap:12px;
 }
-
-main {
-  flex: 1;
-  padding: 35px;
-  min-width: 0;
+.topbar h3 {
+  font-family:Cinzel,serif;
+  margin:0;
+  font-size:18px;
 }
-
-.welcome {
-  margin-bottom: 28px;
+.tag {
+  background:#f3e6cf;
+  color:#986a29;
+  padding:8px 12px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:800;
 }
-
-.welcome h2 {
-  font-size: 27px;
-  margin-bottom: 8px;
+.hero {
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 90% 20%,#bc8c4355,transparent 42%),
+    linear-gradient(120deg,#16283d,#304862);
+  color:white;
+  padding:39px;
+  min-height:265px;
+  margin-bottom:26px;
 }
-
-.welcome p {
-  color: #718096;
+.hero::after {
+  content:"🏛";
+  position:absolute;
+  right:55px;
+  top:5px;
+  font-size:185px;
+  opacity:.13;
+  pointer-events:none;
 }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 17px;
-  margin-bottom: 30px;
+.hero .overline {
+  color:#e3bf7f;
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:800;
 }
-
+.hero h1 {
+  font:800 clamp(25px,4vw,39px) Cinzel,serif;
+  margin:16px 0;
+  max-width:650px;
+}
+.hero p {
+  color:#d5dee6;
+  max-width:490px;
+  line-height:1.7;
+  font-size:14px;
+}
+.btn {
+  background:var(--gold);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:11px 18px;
+  font-weight:800;
+}
+.btn:hover { filter:brightness(.92) }
+.btn.light {
+  background:#f2eee5;
+  color:#374354;
+}
+.section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:26px 0 15px;
+}
+.section-head h2 {
+  font:700 19px Cinzel,serif;
+  margin:0;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
 .card {
-  background: white;
-  border-radius: 13px;
-  padding: 22px;
-  border: 1px solid #e7ebf1;
+  background:white;
+  border:1px solid #e8e2d6;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 5px 18px #1f2b3810;
 }
-
-.card .emoji {
-  font-size: 27px;
-  margin-bottom: 13px;
-}
-
-.card h3 {
-  font-size: 16px;
-  margin-bottom: 7px;
-}
-
+.card h3 { font-size:16px; margin:13px 0 8px }
 .card p {
-  color: #7b8798;
-  font-size: 13px;
-  line-height: 1.5;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin:0 0 13px;
 }
-
-.section {
-  background: white;
-  border-radius: 13px;
-  padding: 25px;
-  border: 1px solid #e7ebf1;
-  margin-bottom: 20px;
+.card .symbol {
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  background:#f4e9d6;
+  font-size:25px;
 }
-
-.section h3 {
-  margin-bottom: 15px;
+.card button {
+  border:0;
+  background:none;
+  color:#986a29;
+  padding:0;
+  font-weight:800;
 }
-
-.module {
-  background: #f0f5fc;
-  padding: 20px;
-  border-radius: 10px;
+.two-col {
+  display:grid;
+  grid-template-columns:1.45fr 1fr;
+  gap:18px;
+  margin-top:22px;
 }
-
-.module button {
-  background: #174b85;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  padding: 11px 18px;
-  margin-top: 15px;
-  cursor: pointer;
+.panel {
+  background:white;
+  border:1px solid #e8e2d6;
+  border-radius:16px;
+  padding:22px;
 }
-
-.module button:hover {
-  background: #0e3159;
+.panel h3 {
+  font:700 16px Cinzel,serif;
+  margin:0 0 17px;
 }
-
-#content {
-  line-height: 1.7;
+.mission {
+  display:flex;
+  gap:14px;
+  padding:13px 0;
+  border-bottom:1px solid #eee9e1;
 }
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #8995a7;
-  font-size: 12px;
+.mission:last-child { border:0 }
+.num {
+  background:#f4ead8;
+  color:#976d32;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  font-weight:800;
 }
-
+.mission b { font-size:13px }
+.mission p { font-size:12px; color:#85909b; margin:4px 0 }
+.timeline {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.era {
+  padding:21px 12px;
+  text-align:center;
+  background:#fff;
+  border:1px solid #e6dfd2;
+  border-radius:14px;
+  cursor:pointer;
+}
+.era:hover { border-color:var(--gold); background:#fffbf4 }
+.era .em { font-size:37px; margin-bottom:10px }
+.era b { display:block; font-size:13px }
+.era small { color:#8a8c91 }
+.progress {
+  height:10px;
+  background:#e8e4de;
+  border-radius:50px;
+  overflow:hidden;
+  margin-top:13px;
+}
+.progress > div {
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#bf8b3f,#e8ba67);
+  transition:.3s;
+}
+.muted { color:#7b8390; font-size:13px; line-height:1.7 }
+.notice {
+  background:#f9f0e0;
+  color:#8d6636;
+  padding:13px 15px;
+  border-radius:10px;
+  font-size:13px;
+  margin:15px 0;
+}
+.option {
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:8px 0;
+  background:#faf8f4;
+  border:1px solid #e7e0d5;
+  border-radius:10px;
+  text-align:left;
+}
+.option:hover { background:#f2e7d3 }
+.option.correct { background:#e1f5e8; border-color:#49a56a }
+.option.wrong { background:#ffe3e3; border-color:#d46d6d }
+.page { display:none }
+.page.active { display:block }
+input,textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid #d9d3c9;
+  border-radius:10px;
+  font:inherit;
+  margin:8px 0;
+}
+@media(max-width:1050px) {
+  .grid { grid-template-columns:repeat(2,1fr) }
+  .two-col { grid-template-columns:1fr }
+}
 @media(max-width:700px) {
-  .container {
-    display: block;
-  }
-
-  nav {
-    width: 100%;
-    display: flex;
-    overflow-x: auto;
-    padding: 10px;
-  }
-
-  nav p {
-    display: none;
-  }
-
-  nav button {
-    min-width: max-content;
-    width: auto;
-  }
-
-  main {
-    padding: 20px;
-  }
-
-  header {
-    padding: 18px;
-  }
+  .layout { display:block }
+  .sidebar { width:100%; padding:15px }
+  .logo { padding:5px 10px 12px }
+  .sidebar nav { display:flex; overflow-x:auto; gap:6px }
+  .menu-label { display:none }
+  .nav-btn { width:auto; flex-shrink:0; white-space:nowrap }
+  .main { padding:18px }
+  .hero { padding:25px; min-height:240px }
+  .hero::after { right:-10px; top:35px; font-size:140px }
+  .timeline { grid-template-columns:repeat(2,1fr) }
 }
 </style>
 </head>
 
 <body>
+<div class="layout">
 
-<header>
-  <div>
-    <h1>EDUCLASS</h1>
-    <span>Interactive Learning Platform</span>
+<aside class="sidebar">
+  <div class="logo">
+    📜 EduClass
+    <small>EXPLORE · LEARN · CREATE</small>
   </div>
-  <span>SEJARAH DIGITAL</span>
-</header>
+  <nav>
+    <div class="menu-label">PUSAT PEMBELAJARAN</div>
+    <button class="nav-btn active" onclick="go('dashboard',this)">🏠 Dashboard</button>
+    <button class="nav-btn" onclick="go('nota',this)">📚 Nota Pembelajaran</button>
+    <button class="nav-btn" onclick="go('penerokaan',this)">🔍 Penerokaan</button>
+    <button class="nav-btn" onclick="go('pengembangan',this)">🏗️ Pengembangan</button>
+    <button class="nav-btn" onclick="go('permainan',this)">🎮 Permainan</button>
+    <button class="nav-btn" onclick="go('latihan',this)">📝 Latihan</button>
+    <button class="nav-btn" onclick="go('tugasan',this)">📤 Hantar Tugasan</button>
+    <div class="menu-label">PENCAPAIAN</div>
+    <button class="nav-btn" onclick="go('penilaian',this)">🏆 Dashboard Penilaian</button>
+  </nav>
+</aside>
 
-<div class="container">
-
-<nav>
-  <p>MENU UTAMA</p>
-  <button class="active" onclick="showPage('home',this)">🏠 Dashboard</button>
-  <button onclick="showPage('notes',this)">📚 Nota Pembelajaran</button>
-  <button onclick="showPage('explore',this)">🔎 Penerokaan</button>
-  <button onclick="showPage('develop',this)">🏗️ Pengembangan</button>
-  <button onclick="showPage('games',this)">🎮 Permainan</button>
-  <button onclick="showPage('practice',this)">📝 Latihan</button>
-  <button onclick="showPage('upload',this)">📤 Hantar Tugasan</button>
-  <p>PEMANTAUAN</p>
-  <button onclick="showPage('assessment',this)">📊 Penilaian</button>
-</nav>
-
-<main>
-<div id="content">
-
-<div class="welcome">
-  <h2>Selamat Datang ke EduClass!</h2>
-  <p>Teroka ilmu, bina pengalaman dan cipta pembelajaran bermakna.</p>
+<main class="main">
+<div class="topbar">
+  <h3>EDUCLASS / HISTORY QUEST</h3>
+  <span class="tag">🏺 Sejarah Tingkatan 1</span>
 </div>
 
-<div class="cards">
-  <div class="card">
-    <div class="emoji">📚</div>
-    <h3>Nota</h3>
-    <p>Akses bahan pembelajaran dan nota digital.</p>
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <div class="overline">SELAMAT DATANG, PENJELAJAH MASA</div>
+    <h1>Jelajahi Dunia Sejarah</h1>
+    <p>Mulakan ekspedisi merentas zaman. Temui artifak, selesaikan misi dan bina pengetahuan sejarah melalui pengalaman interaktif.</p>
+    <button class="btn" onclick="go('nota')">Mulakan Ekspedisi →</button>
   </div>
 
-  <div class="card">
-    <div class="emoji">🔎</div>
-    <h3>Penerokaan</h3>
-    <p>Teroka dunia sejarah melalui aktiviti interaktif.</p>
+  <div class="section-head">
+    <h2>Destinasi Pembelajaran</h2>
+    <span class="tag">4 Zaman</span>
+  </div>
+  <div class="timeline">
+    <div class="era" onclick="eraInfo('Paleolitik')">
+      <div class="em">🪨</div><b>Paleolitik</b><small>Zaman Batu Awal</small>
+    </div>
+    <div class="era" onclick="eraInfo('Mesolitik')">
+      <div class="em">🏹</div><b>Mesolitik</b><small>Zaman Batu Pertengahan</small>
+    </div>
+    <div class="era" onclick="eraInfo('Neolitik')">
+      <div class="em">🏺</div><b>Neolitik</b><small>Zaman Batu Baharu</small>
+    </div>
+    <div class="era" onclick="eraInfo('Logam')">
+      <div class="em">⚒️</div><b>Zaman Logam</b><small>Teknologi Logam</small>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="emoji">🎮</div>
-    <h3>Permainan</h3>
-    <p>Belajar melalui permainan pendidikan.</p>
+  <div class="section-head"><h2>Modul Pembelajaran</h2></div>
+  <div class="grid">
+    <div class="card">
+      <div class="symbol">📖</div>
+      <h3>Nota Sejarah</h3>
+      <p>Pelajari ciri kehidupan manusia prasejarah.</p>
+      <button onclick="go('nota')">Buka modul →</button>
+    </div>
+    <div class="card">
+      <div class="symbol">🔎</div>
+      <h3>Misi Arkeologi</h3>
+      <p>Teroka artifak dan temukan bukti sejarah.</p>
+      <button onclick="go('penerokaan')">Teroka →</button>
+    </div>
+    <div class="card">
+      <div class="symbol">🏗️</div>
+      <h3>Bina Zaman</h3>
+      <p>Lengkapkan diorama melalui soalan KBAT.</p>
+      <button onclick="go('pengembangan')">Lihat aktiviti →</button>
+    </div>
+    <div class="card">
+      <div class="symbol">🏆</div>
+      <h3>Pencapaian</h3>
+      <p>Pantau latihan dan perjalanan pembelajaran.</p>
+      <button onclick="go('penilaian')">Lihat pencapaian →</button>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="emoji">📊</div>
-    <h3>Penilaian</h3>
-    <p>Lihat pencapaian dan perkembangan pembelajaran.</p>
+  <div class="two-col">
+    <div class="panel">
+      <h3>🎯 Misi Pembelajaran</h3>
+      <div class="mission"><div class="num">01</div><div><b>Kenali Empat Zaman</b><p>Baca nota dan kenal pasti ciri utama.</p></div></div>
+      <div class="mission"><div class="num">02</div><div><b>Detektif Arkeologi</b><p>Selidiki bukti dan buat inferens.</p></div></div>
+      <div class="mission"><div class="num">03</div><div><b>Bina Dunia Prasejarah</b><p>Jawab soalan untuk membuka visual diorama.</p></div></div>
+      <div class="mission"><div class="num">04</div><div><b>Uji Kefahaman</b><p>Selesaikan latihan dan refleksi.</p></div></div>
+    </div>
+    <div class="panel">
+      <h3>📊 Kemajuan Ekspedisi</h3>
+      <p class="muted">Latihan contoh pertama boleh dicuba dalam menu Latihan.</p>
+      <p><b id="progress-label">0% selesai</b></p>
+      <div class="progress"><div id="progress-fill"></div></div>
+      <div class="notice">📜 Perjalanan sejarah bermula dengan satu penemuan.</div>
+      <button class="btn" onclick="go('latihan')">Cuba Latihan</button>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="section">
-  <h3>Modul Pembelajaran Terkini</h3>
-  <div class="module">
-    <h3>🏺 Zaman Prasejarah</h3>
-    <p>Sejarah Tingkatan 1</p>
-    <p>Kenali ciri-ciri kehidupan manusia pada empat zaman prasejarah.</p>
-    <button onclick="showPage('notes',document.querySelectorAll('nav button')[1])">
-      Teroka Modul →
-    </button>
+<section id="nota" class="page">
+  <div class="hero">
+    <div class="overline">PERPUSTAKAAN DIGITAL</div>
+    <h1>Nota Zaman Prasejarah</h1>
+    <p>Kenali perubahan cara hidup dan teknologi manusia merentas empat zaman.</p>
   </div>
-</div>
+  <div class="grid" id="nota-list"></div>
+</section>
 
-<div class="section">
-  <h3>Perjalanan Pembelajaran</h3>
-  <p>1. Penerangan dan nota</p>
-  <p>2. Penerokaan artifak</p>
-  <p>3. Pengembangan – Bina Zaman Prasejarah</p>
-  <p>4. Latihan dan penilaian</p>
-</div>
+<section id="penerokaan" class="page">
+  <div class="hero">
+    <div class="overline">MISI 01 / PENYIASATAN</div>
+    <h1>Detektif Arkeologi</h1>
+    <p>Perhatikan artifak dan kumpulkan maklumat tentang kehidupan manusia prasejarah.</p>
+  </div>
+  <div class="panel">
+    <h3>🔍 Koleksi Artifak</h3>
+    <p class="muted">Klik setiap artifak untuk mendapatkan maklumat.</p>
+    <div class="grid">
+      <div class="card" onclick="artifact('Alat batu','Peralatan batu merupakan bukti penting kegiatan manusia prasejarah.')"><div class="symbol">🪨</div><h3>Alat Batu</h3><p>Klik untuk menyiasat.</p></div>
+      <div class="card" onclick="artifact('Tembikar','Tembikar digunakan dalam pelbagai kegiatan penyimpanan dan penyediaan makanan.')"><div class="symbol">🏺</div><h3>Tembikar</h3><p>Klik untuk menyiasat.</p></div>
+      <div class="card" onclick="artifact('Peralatan memburu','Peralatan memburu menunjukkan cara manusia mendapatkan sumber makanan.')"><div class="symbol">🏹</div><h3>Alat Memburu</h3><p>Klik untuk menyiasat.</p></div>
+      <div class="card" onclick="artifact('Peralatan logam','Kemahiran mengolah logam memberi kesan kepada teknologi dan kegiatan masyarakat.')"><div class="symbol">⚒️</div><h3>Alat Logam</h3><p>Klik untuk menyiasat.</p></div>
+    </div>
+    <div class="notice" id="artifact-result">Pilih artifak untuk memulakan penerokaan.</div>
+  </div>
+</section>
 
-</div>
+<section id="pengembangan" class="page">
+  <div class="hero">
+    <div class="overline">MISI 02 / PEMBINAAN</div>
+    <h1>Bina Zaman Prasejarah</h1>
+    <p>Jawab soalan untuk melengkapkan petempatan, kegiatan, peralatan dan cara hidup bagi setiap zaman.</p>
+  </div>
+  <div class="panel">
+    <h3>🏗️ Ruang Permainan Interaktif</h3>
+    <p class="muted">Game HTML5 yang dibangunkan oleh ahli kumpulan akan dipaparkan di bahagian ini.</p>
+    <div class="notice">Game belum diintegrasikan. Ruang ini disediakan untuk modul diorama interaktif.</div>
+  </div>
+</section>
+
+<section id="permainan" class="page">
+  <div class="hero">
+    <div class="overline">EDUGAME LIBRARY</div>
+    <h1>Arkib Permainan Sejarah</h1>
+    <p>Koleksi permainan pendidikan untuk pelbagai tajuk dan tingkatan.</p>
+  </div>
+  <div class="panel">
+    <h3>🎮 Bina Zaman Prasejarah</h3>
+    <p class="muted">Permainan pertama EduClass akan disenaraikan di sini selepas berjaya diintegrasikan.</p>
+  </div>
+</section>
+
+<section id="latihan" class="page">
+  <div class="hero">
+    <div class="overline">CABARAN ILMU</div>
+    <h1>Uji Kefahaman Sejarah</h1>
+    <p>Jawab soalan untuk menguji kefahaman tentang perubahan kehidupan manusia prasejarah.</p>
+  </div>
+  <div class="panel">
+    <h3>🧠 Soalan Latihan Contoh</h3>
+    <p>Manusia mula mengusahakan pertanian dan menternak haiwan. Antara berikut, apakah perubahan yang berkaitan dengan perkembangan tersebut?</p>
+    <button class="option" onclick="answer(this,false)">A. Semua manusia terus hidup berpindah-randah</button>
+    <button class="option" onclick="answer(this,true)">B. Petempatan lebih kekal mula berkembang</button>
+    <button class="option" onclick="answer(this,false)">C. Penggunaan mesin moden menjadi kebiasaan</button>
+    <button class="option" onclick="answer(this,false)">D. Semua kegiatan mendapatkan makanan terhenti</button>
+    <div id="quiz-feedback" class="notice">Pilih satu jawapan.</div>
+  </div>
+</section>
+
+<section id="tugasan" class="page">
+  <div class="hero">
+    <div class="overline">STUDIO KREATIF</div>
+    <h1>Hantar Hasil Kerja</h1>
+    <p>Hasilkan poster dan infografik berdasarkan perjalanan pembelajaran sejarah.</p>
+  </div>
+  <div class="panel">
+    <h3>📤 Poster Zaman Prasejarah</h3>
+    <p class="muted">Ruang penghantaran poster akan dihubungkan kepada sistem storan EduClass.</p>
+    <label for="poster">Pilih fail untuk pratonton</label>
+    <input id="poster" type="file" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile(this)">
+    <div id="file-preview" class="notice">Belum ada fail dipilih.</div>
+    <p class="muted">Ini masih fungsi pratonton. Fail belum dihantar atau disimpan dalam database.</p>
+  </div>
+</section>
+
+<section id="penilaian" class="page">
+  <div class="hero">
+    <div class="overline">REKOD PENCAPAIAN</div>
+    <h1>Dashboard Penilaian</h1>
+    <p>Pantau perkembangan pembelajaran melalui latihan, aktiviti dan tugasan.</p>
+  </div>
+  <div class="panel">
+    <h3>🏆 Prestasi Latihan Contoh</h3>
+    <p id="result-text">Belum ada latihan diselesaikan.</p>
+    <div class="progress"><div id="result-bar"></div></div>
+    <p class="muted">Rekod ini hanya disimpan pada browser yang digunakan. Penilaian sebenar memerlukan database Supabase.</p>
+  </div>
+</section>
+
 </main>
 </div>
 
-<footer>
-  EDUCLASS © 2026 | Interactive Learning Platform
-</footer>
-
 <script>
-function showPage(page,button) {
-  const content = document.getElementById("content");
+const notes = [
+  {
+    name:"Paleolitik",icon:"🪨",
+    info:"Manusia menggunakan peralatan batu awal, memburu dan mengumpulkan makanan. Sesetengah komuniti menggunakan gua atau naungan semula jadi sebagai perlindungan."
+  },
+  {
+    name:"Mesolitik",icon:"🏹",
+    info:"Manusia menyesuaikan kehidupan dengan persekitaran, termasuk menggunakan sumber sungai dan pesisir serta peralatan batu yang lebih khusus di sesetengah kawasan."
+  },
+  {
+    name:"Neolitik",icon:"🏺",
+    info:"Perkembangan pertanian, penternakan, tembikar dan petempatan lebih kekal berlaku dalam pelbagai komuniti."
+  },
+  {
+    name:"Zaman Logam",icon:"⚒️",
+    info:"Penggunaan peralatan gangsa dan besi serta perkembangan pertukangan dan pertukaran barangan berlaku mengikut tempat dan masa."
+  }
+];
 
-  document.querySelectorAll("nav button").forEach(b => {
-    b.classList.remove("active");
-  });
+document.getElementById("nota-list").innerHTML =
+  notes.map(n=>`
+    <div class="card">
+      <div class="symbol">${n.icon}</div>
+      <h3>${n.name}</h3>
+      <p>${n.info}</p>
+    </div>
+  `).join("");
 
+function go(id,button) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
   if(button) button.classList.add("active");
-
-  const pages = {
-    home: `<h2>Selamat Datang ke EduClass!</h2>
-      <p>Platform pembelajaran digital Sejarah.</p>`,
-
-    notes: `<h2>📚 Nota Pembelajaran</h2>
-      <p>Nota dan bahan pembelajaran Zaman Prasejarah akan ditempatkan di sini.</p>`,
-
-    explore: `<h2>🔎 Penerokaan</h2>
-      <p>Aktiviti Misi Detektif Arkeologi akan ditempatkan di sini.</p>`,
-
-    develop: `<h2>🏗️ Pengembangan</h2>
-      <p>Aktiviti Bina Zaman Prasejarah akan ditempatkan di sini.</p>`,
-
-    games: `<h2>🎮 Permainan</h2>
-      <p>Game HTML5 akan diintegrasikan di sini.</p>`,
-
-    practice: `<h2>📝 Latihan</h2>
-      <p>Latihan objektif dan soalan KBAT akan ditempatkan di sini.</p>`,
-
-    upload: `<h2>📤 Hantar Tugasan</h2>
-      <p>Ruang penghantaran poster dan hasil kerja murid akan dibangunkan di sini.</p>`,
-
-    assessment: `<h2>📊 Dashboard Penilaian</h2>
-      <p>Markah, refleksi dan perkembangan murid akan dipaparkan di sini.</p>`
-  };
-
-  content.innerHTML = pages[page] || pages.home;
+  else {
+    const target = [...document.querySelectorAll(".nav-btn")]
+      .find(b=>b.getAttribute("onclick").includes("'"+id+"'"));
+    if(target) target.classList.add("active");
+  }
+  window.scrollTo(0,0);
 }
-</script>
 
+function eraInfo(era) {
+  go("nota");
+  const selected = notes.find(n=>n.name===era || (era==="Logam"&&n.name==="Zaman Logam"));
+  if(selected) alert(selected.name+": "+selected.info);
+}
+
+function artifact(name,info) {
+  document.getElementById("artifact-result").textContent=name+" — "+info;
+}
+
+function answer(button,correct) {
+  document.querySelectorAll(".option").forEach(b=>{
+    b.disabled=true;
+    b.classList.remove("wrong","correct");
+  });
+  button.classList.add(correct?"correct":"wrong");
+  const feedback=document.getElementById("quiz-feedback");
+  feedback.textContent=correct
+    ?"✓ Tepat! Pertanian dan penternakan berkait dengan perkembangan petempatan lebih kekal."
+    :"✕ Kurang tepat. Fikirkan hubungan antara penghasilan makanan dengan keperluan berpindah.";
+  localStorage.setItem("educlass-demo-answer",correct?"1":"0");
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed=localStorage.getItem("educlass-demo-answer")==="1";
+  const percent=completed?100:0;
+  document.getElementById("progress-label").textContent=percent+"% latihan contoh";
+  document.getElementById("progress-fill").style.width=percent+"%";
+  document.getElementById("result-bar").style.width=percent+"%";
+  document.getElementById("result-text").textContent=
+    completed?"Latihan contoh: Jawapan tepat.":"Latihan contoh belum dijawab dengan tepat.";
+}
+
+function previewFile(input) {
+  const f=input.files[0];
+  document.getElementById("file-preview").textContent =
+    f?"Fail dipilih: "+f.name+" ("+Math.round(f.size/1024)+" KB)":"Belum ada fail dipilih.";
+}
+updateProgress();
+</script>
 </body>
 </html>
