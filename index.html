@@ -259,4 +259,106 @@ function kqResetAll(){if(!confirm('Padam semua rekod profil Krono Quest pada bro
 document.querySelectorAll('.nav[data-screen="student"],.nav[data-screen="teacher"]').forEach(b=>b.addEventListener('click',kqRefreshBoards));
 kqSyncSelect();kqRender();
 
-</script></body></html>
+</script>
+
+<!-- SAMBUNGAN DASHBOARD EDUCLASS KE SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  
+(async function () {
+  const url = "https://phlrzzmnqzdelqdrkiei.supabase.co";
+  const key = "sb_publishable_Ok2XXcUUCPtpdWp_btmRhw_ddlBjLmi";
+
+  if (!window.supabase) return;
+
+  const db = window.supabase.createClient(url, key);
+
+  try {
+    // Semak pengguna yang sedang login
+    const { data: auth, error: authError } =
+      await db.auth.getUser();
+
+    if (authError || !auth.user) return;
+
+    // Dapatkan profil sebenar
+    const { data: profile, error: profileError } =
+      await db
+        .from("profiles")
+        .select("full_name, role")
+        .eq("id", auth.user.id)
+        .single();
+
+    if (profileError || profile?.role !== "student") {
+      return;
+    }
+
+    // Dapatkan senarai kelas murid
+    const { data: classes, error: classError } =
+      await db.rpc("educlass_my_classes");
+
+    if (classError) throw classError;
+
+    // Cari tajuk Dashboard Murid
+    const heading = Array.from(
+      document.querySelectorAll("h1")
+    ).find(el =>
+      el.textContent.includes("Dashboard Murid")
+    );
+
+    if (!heading) return;
+
+    // Bina paparan maklumat murid
+    const panel = document.createElement("div");
+
+    panel.style.cssText =
+      "background:#203b50;" +
+      "border:1px solid #d8a75b;" +
+      "border-radius:14px;" +
+      "padding:22px;" +
+      "margin:20px 0;" +
+      "color:#ffffff;";
+
+    const greeting = document.createElement("h2");
+    greeting.textContent =
+      "👋 Selamat kembali, " +
+      (profile.full_name || "Penjelajah") + "!";
+
+    greeting.style.cssText =
+      "color:#e8bb71;margin:0 0 15px;";
+
+    panel.appendChild(greeting);
+
+    const list = Array.isArray(classes) ? classes : [];
+
+    if (list.length === 0) {
+      const empty = document.createElement("p");
+      empty.textContent =
+        "Anda belum menyertai mana-mana kelas.";
+      panel.appendChild(empty);
+    } else {
+      list.forEach(c => {
+        const info = document.createElement("p");
+
+        info.textContent =
+          "🏫 Tingkatan " + c.form_level +
+          " — Kelas " + c.name;
+
+        panel.appendChild(info);
+      });
+    }
+
+    heading.insertAdjacentElement("afterend", panel);
+
+  } catch (error) {
+    console.error(
+      "Gagal memuatkan profil EduClass:",
+      error
+    );
+  }
+})();
+
+</script>
+
+</body>
+</html>
