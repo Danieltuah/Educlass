@@ -179,35 +179,32 @@ task+='</div>';document.getElementById('kqPlay').innerHTML=stage+task;kqRefreshB
 
 function kqArtifact(i) {
   const q = kqQuestions[kqQuestion];
-  const area = document.getElementById("kqArtifactText");
-  if (!q || !area) return;
+
+  if (!q) {
+    alert("Maklumat misi tidak dijumpai.");
+    return;
+  }
 
   const clues = [
-    "🔎 PETUNJUK 1 — BUKTI\n" +
-    "Perhatikan objek dan maklumat dalam soalan: " +
-    q.q,
+    "PETUNJUK 1 — PEMERHATIAN\n\n" +
+    "Teliti objek, bahan dan maklumat dalam soalan. " +
+    "Apakah bukti utama yang boleh kamu kenal pasti?",
 
-    "🧩 PETUNJUK 2 — HUBUNG KAIT\n" +
-    "Soalan ini melibatkan subtopik " +
-    q.tags.join(", ") +
-    ". Bandingkan bukti dengan fakta yang telah dipelajari.",
+    "PETUNJUK 2 — HUBUNG KAIT\n\n" +
+    "Rujuk subtopik " + q.tags.join(", ") +
+    ". Bandingkan bukti dengan fakta dalam nota EduClass.",
 
-    "💡 PETUNJUK 3 — BANTUAN BERFIKIR\n" +
+    "PETUNJUK 3 — BANTUAN MISI\n\n" +
     q.hint
   ];
 
-  area.textContent = clues[i] || clues[0];
-  area.style.whiteSpace = "pre-line";
-  area.style.borderColor = "#f3ca78";
+  const message = clues[i];
 
-  area.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
-  });
-
-  kqHintShown = true;
+  if (message) {
+    alert(message);
+    kqHintShown = true;
+  }
 }
-
 function kqSelectAnswer(i){if(kqPending)return;kqCurrentChoices[kqQuestion]=i;document.querySelectorAll('.kq-answer').forEach((b,j)=>{b.style.borderColor=j===i?'#f5c477':'#62798b';b.style.background=j===i?'#46513d':'#233747'})}
 function kqSelectOrder(i){let q=kqQuestions[kqQuestion],v=q.options[i];if(kqOrder.includes(v))return;kqOrder.push(v);document.getElementById('kqRank'+i).classList.add('used');document.getElementById('kqOrderStatus').textContent=kqOrder.join(' → ')}
 function kqResetOrder(){kqOrder=[];document.querySelectorAll('.kq-rank button').forEach(x=>x.classList.remove('used'));document.getElementById('kqOrderStatus').textContent='Urutan pilihan: belum ada.'}
