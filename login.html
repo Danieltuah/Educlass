@@ -196,6 +196,17 @@ a {
 
     <form id="userForm">
 
+<div id="nameField" style="display:none">
+  <label for="fullName">Nama Penuh Murid</label>
+  <input
+    id="fullName"
+    type="text"
+    placeholder="Contoh: Muhammad Daniel bin Ahmad"
+    maxlength="120"
+    autocomplete="name"
+  >
+</div>
+
       <label for="email">Alamat E-mel</label>
       <input
         id="email"
@@ -281,6 +292,12 @@ function showMessage(text, error = false) {
 function changeMode(nextMode) {
   mode = nextMode;
 
+document.getElementById("nameField").style.display =
+  mode === "register" ? "block" : "none";
+
+document.getElementById("fullName").required =
+  mode === "register";
+
   document.getElementById("loginTab")
     .classList.toggle("active", mode === "login");
 
@@ -312,10 +329,26 @@ document.getElementById("userForm")
     try {
       if (mode === "register") {
 
-        const { data, error } = await db.auth.signUp({
-          email,
-          password
-        });
+       
+const fullName = document
+  .getElementById("fullName")
+  .value.trim();
+
+if (fullName.length < 2) {
+  showMessage("Sila masukkan nama penuh yang sah.", true);
+  return;
+}
+
+const { data, error } = await db.auth.signUp({
+  email,
+  password,
+  options: {
+    data: {
+      full_name: fullName
+    }
+  }
+});
+
 
         if (error) throw error;
 
