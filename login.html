@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduClass | Portal Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Outfit', sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, #b78a4540, transparent 35%),
+    linear-gradient(135deg, #0c1928, #20374c);
+  color: #f7f1e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 450px;
+  padding: 35px;
+  background: #152638f2;
+  border: 1px solid #c49a5650;
+  border-radius: 22px;
+  box-shadow: 0 25px 60px #0006;
+}
+
+.logo {
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  color: #e6be78;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: #aebdcc;
+  margin: 12px 0 28px;
+  line-height: 1.7;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 23px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #526275;
+  background: transparent;
+  color: #d9e1eb;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.tabs button.active {
+  background: #bd8e49;
+  border-color: #bd8e49;
+  color: #102033;
+}
+
+label {
+  display: block;
+  margin: 15px 0 7px;
+  color: #e7e1d7;
+  font-size: 13px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #536477;
+  border-radius: 10px;
+  outline: none;
+  background: #0c1b2a;
+  color: white;
+  font: inherit;
+}
+
+input:focus {
+  border-color: #e6be78;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  background: #c4944d;
+  border: 0;
+  border-radius: 10px;
+  color: #122033;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.notice {
+  display: none;
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #63788b;
+  border-radius: 10px;
+  background: #253d51;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.notice.error {
+  border-color: #d57b7b;
+  background: #5b2c37;
+}
+
+a {
+  color: #e6be78;
+  text-decoration: none;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 12px;
+  color: #9bafbf;
+}
+
+#loggedIn { display: none; }
+
+.user {
+  padding: 18px;
+  background: #20384b;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.secondary {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #bd8e49;
+  border-radius: 10px;
+  background: transparent;
+  color: #e6be78;
+  width: 100%;
+  cursor: pointer;
+  font: inherit;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">⏳ EDUCLASS</div>
+  <div class="subtitle">
+    HISTORY QUEST · PORTAL PEMBELAJARAN<br>
+    Selamat datang ke dunia pengembaraan ilmu
+  </div>
+
+  <div id="authForm">
+
+    <div class="tabs">
+      <button id="loginTab" class="active"
+        onclick="changeMode('login')">
+        Log Masuk
+      </button>
+
+      <button id="registerTab"
+        onclick="changeMode('register')">
+        Daftar Murid
+      </button>
+    </div>
+
+    <form id="userForm">
+
+      <label for="email">Alamat E-mel</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="nama@contoh.com"
+        autocomplete="email"
+        required
+      >
+
+      <label for="password">Kata Laluan</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Minimum 8 aksara"
+        minlength="8"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="primary" id="submitBtn" type="submit">
+        Log Masuk
+      </button>
+
+    </form>
+
+  </div>
+
+  <div id="loggedIn">
+
+    <h2>Selamat Datang, Penjelajah! 🏆</h2>
+
+    <div class="user">
+      <p id="userEmail"></p>
+      <p id="userRole"></p>
+    </div>
+
+    <a class="primary"
+       href="index.html"
+       style="display:block;text-align:center;text-decoration:none">
+      Masuk ke EduClass →
+    </a>
+
+    <button class="secondary" onclick="logout()">
+      Log Keluar
+    </button>
+
+  </div>
+
+  <div class="notice" id="message"
+       role="status" aria-live="polite"></div>
+
+  <div class="footer">
+    Sistem Akaun EduClass<br>
+    <a href="index.html">Kembali ke Halaman Utama</a>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL =
+  "https://phlrrzmnqzdelqdrkiei.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Ok2XXcUUCPtpdWp_btmRhw_ddlBjLmi";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let mode = "login";
+
+const message = document.getElementById("message");
+const submitBtn = document.getElementById("submitBtn");
+
+function showMessage(text, error = false) {
+  message.textContent = text;
+  message.style.display = "block";
+  message.classList.toggle("error", error);
+}
+
+function changeMode(nextMode) {
+  mode = nextMode;
+
+  document.getElementById("loginTab")
+    .classList.toggle("active", mode === "login");
+
+  document.getElementById("registerTab")
+    .classList.toggle("active", mode === "register");
+
+  submitBtn.textContent =
+    mode === "login" ? "Log Masuk" : "Daftar Akaun Murid";
+
+  document.getElementById("password").autocomplete =
+    mode === "login" ? "current-password" : "new-password";
+
+  message.style.display = "none";
+}
+
+document.getElementById("userForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Memproses...";
+
+    try {
+      if (mode === "register") {
+
+        const { data, error } = await db.auth.signUp({
+          email,
+          password
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          await showLoggedIn(data.user);
+        } else {
+          showMessage(
+            "Pendaftaran diterima.\n\n" +
+            "Semak e-mel untuk pautan pengesahan. " +
+            "Selepas mengesahkan e-mel, kembali ke " +
+            "halaman ini untuk log masuk."
+          );
+        }
+
+      } else {
+
+        const { data, error } =
+          await db.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) throw error;
+
+        await showLoggedIn(data.user);
+      }
+
+    } catch (error) {
+      showMessage(
+        "Tidak berjaya: " + error.message,
+        true
+      );
+
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent =
+        mode === "login"
+          ? "Log Masuk"
+          : "Daftar Akaun Murid";
+    }
+  });
+
+async function showLoggedIn(user) {
+  if (!user) return;
+
+  document.getElementById("authForm").style.display = "none";
+  document.getElementById("loggedIn").style.display = "block";
+  document.getElementById("userEmail").textContent =
+    "E-mel: " + user.email;
+
+  const { data, error } = await db
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const roleText =
+    !error && data?.role
+      ? data.role
+      : "Profil belum tersedia";
+
+  document.getElementById("userRole").textContent =
+    "Peranan: " + roleText;
+
+  message.style.display = "none";
+}
+
+async function logout() {
+  const { error } = await db.auth.signOut();
+
+  if (error) {
+    showMessage(error.message, true);
+    return;
+  }
+
+  document.getElementById("loggedIn").style.display = "none";
+  document.getElementById("authForm").style.display = "block";
+
+  document.getElementById("password").value = "";
+
+  changeMode("login");
+  showMessage("Anda telah log keluar.");
+}
+
+async function checkSession() {
+  const { data, error } = await db.auth.getUser();
+
+  if (!error && data.user) {
+    await showLoggedIn(data.user);
+  }
+}
+
+checkSession();
+</script>
+
+</body>
+</html>
