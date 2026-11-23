@@ -1,715 +1,104 @@
-
 <!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EduClass | History Quest</title>
+<html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101b27"><title>EduClass | Ekspedisi Prasejarah</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --navy:#172638;
-  --navy2:#243b50;
-  --gold:#bc8c43;
-  --cream:#f8f4eb;
-  --ink:#293648;
-  --muted:#7b8390;
-}
-* { box-sizing:border-box }
-body {
-  margin:0;
-  background:#f4f1e9;
-  color:var(--ink);
-  font-family:'DM Sans',sans-serif;
-}
-button { cursor:pointer; font:inherit }
-.layout { display:flex; min-height:100vh }
-.sidebar {
-  width:255px;
-  background:var(--navy);
-  color:white;
-  padding:26px 18px;
-  flex-shrink:0;
-}
-.logo {
-  color:#f4dca6;
-  font:800 25px Cinzel,serif;
-  padding:10px 12px 26px;
-}
-.logo small {
-  display:block;
-  color:#a9b8c5;
-  font:11px 'DM Sans',sans-serif;
-  margin-top:7px;
-  letter-spacing:1px;
-}
-.menu-label {
-  font-size:10px;
-  letter-spacing:2px;
-  color:#98aabd;
-  margin:22px 12px 11px;
-  font-weight:800;
-}
-.nav-btn {
-  width:100%;
-  text-align:left;
-  padding:13px 14px;
-  margin-bottom:5px;
-  border:0;
-  border-radius:11px;
-  color:#d9e3ed;
-  background:transparent;
-  transition:.2s;
-}
-.nav-btn:hover,.nav-btn.active {
-  background:#34485c;
-  color:#f8d69a;
-}
-.main {
-  padding:25px 35px 45px;
-  flex:1;
-  min-width:0;
-}
-.topbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:23px;
-  gap:12px;
-}
-.topbar h3 {
-  font-family:Cinzel,serif;
-  margin:0;
-  font-size:18px;
-}
-.tag {
-  background:#f3e6cf;
-  color:#986a29;
-  padding:8px 12px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:800;
-}
-.hero {
-  position:relative;
-  overflow:hidden;
-  border-radius:22px;
-  background:
-    radial-gradient(circle at 90% 20%,#bc8c4355,transparent 42%),
-    linear-gradient(120deg,#16283d,#304862);
-  color:white;
-  padding:39px;
-  min-height:265px;
-  margin-bottom:26px;
-}
-.hero::after {
-  content:"🏛";
-  position:absolute;
-  right:55px;
-  top:5px;
-  font-size:185px;
-  opacity:.13;
-  pointer-events:none;
-}
-.hero .overline {
-  color:#e3bf7f;
-  letter-spacing:3px;
-  font-size:11px;
-  font-weight:800;
-}
-.hero h1 {
-  font:800 clamp(25px,4vw,39px) Cinzel,serif;
-  margin:16px 0;
-  max-width:650px;
-}
-.hero p {
-  color:#d5dee6;
-  max-width:490px;
-  line-height:1.7;
-  font-size:14px;
-}
-.btn {
-  background:var(--gold);
-  color:white;
-  border:0;
-  border-radius:10px;
-  padding:11px 18px;
-  font-weight:800;
-}
-.btn:hover { filter:brightness(.92) }
-.btn.light {
-  background:#f2eee5;
-  color:#374354;
-}
-.section-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin:26px 0 15px;
-}
-.section-head h2 {
-  font:700 19px Cinzel,serif;
-  margin:0;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:16px;
-}
-.card {
-  background:white;
-  border:1px solid #e8e2d6;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 5px 18px #1f2b3810;
-}
-.card h3 { font-size:16px; margin:13px 0 8px }
-.card p {
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-  margin:0 0 13px;
-}
-.card .symbol {
-  display:grid;
-  place-items:center;
-  width:52px;
-  height:52px;
-  border-radius:14px;
-  background:#f4e9d6;
-  font-size:25px;
-}
-.card button {
-  border:0;
-  background:none;
-  color:#986a29;
-  padding:0;
-  font-weight:800;
-}
-.two-col {
-  display:grid;
-  grid-template-columns:1.45fr 1fr;
-  gap:18px;
-  margin-top:22px;
-}
-.panel {
-  background:white;
-  border:1px solid #e8e2d6;
-  border-radius:16px;
-  padding:22px;
-}
-.panel h3 {
-  font:700 16px Cinzel,serif;
-  margin:0 0 17px;
-}
-.mission {
-  display:flex;
-  gap:14px;
-  padding:13px 0;
-  border-bottom:1px solid #eee9e1;
-}
-.mission:last-child { border:0 }
-.num {
-  background:#f4ead8;
-  color:#976d32;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  flex-shrink:0;
-  font-weight:800;
-}
-.mission b { font-size:13px }
-.mission p { font-size:12px; color:#85909b; margin:4px 0 }
-.timeline {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-.era {
-  padding:21px 12px;
-  text-align:center;
-  background:#fff;
-  border:1px solid #e6dfd2;
-  border-radius:14px;
-  cursor:pointer;
-}
-.era:hover { border-color:var(--gold); background:#fffbf4 }
-.era .em { font-size:37px; margin-bottom:10px }
-.era b { display:block; font-size:13px }
-.era small { color:#8a8c91 }
-.progress {
-  height:10px;
-  background:#e8e4de;
-  border-radius:50px;
-  overflow:hidden;
-  margin-top:13px;
-}
-.progress > div {
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#bf8b3f,#e8ba67);
-  transition:.3s;
-}
-.muted { color:#7b8390; font-size:13px; line-height:1.7 }
-.notice {
-  background:#f9f0e0;
-  color:#8d6636;
-  padding:13px 15px;
-  border-radius:10px;
-  font-size:13px;
-  margin:15px 0;
-}
-.option {
-  display:block;
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-  background:#faf8f4;
-  border:1px solid #e7e0d5;
-  border-radius:10px;
-  text-align:left;
-}
-.option:hover { background:#f2e7d3 }
-.option.correct { background:#e1f5e8; border-color:#49a56a }
-.option.wrong { background:#ffe3e3; border-color:#d46d6d }
-.page { display:none }
-.page.active { display:block }
-input,textarea {
-  width:100%;
-  padding:12px;
-  border:1px solid #d9d3c9;
-  border-radius:10px;
-  font:inherit;
-  margin:8px 0;
-}
-@media(max-width:1050px) {
-  .grid { grid-template-columns:repeat(2,1fr) }
-  .two-col { grid-template-columns:1fr }
-}
-@media(max-width:700px) {
-  .layout { display:block }
-  .sidebar { width:100%; padding:15px }
-  .logo { padding:5px 10px 12px }
-  .sidebar nav { display:flex; overflow-x:auto; gap:6px }
-  .menu-label { display:none }
-  .nav-btn { width:auto; flex-shrink:0; white-space:nowrap }
-  .main { padding:18px }
-  .hero { padding:25px; min-height:240px }
-  .hero::after { right:-10px; top:35px; font-size:140px }
-  .timeline { grid-template-columns:repeat(2,1fr) }
-} 
-  .gallery-card,
-.exhibit-card {
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.gallery-card:hover,
-.exhibit-card:hover {
-  transform: translateY(-3px);
-  border-color: #bc8c43;
-  background: #fffaf2;
-}
-
-.museum-active {
-  border-color: #bc8c43 !important;
-  background: #fffaf2 !important;
-}
-</style>
-</head>
-
-<body>
-<div class="layout">
-
-<aside class="sidebar">
-  <div class="logo">
-    📜 EduClass
-    <small>EXPLORE · LEARN · CREATE</small>
-  </div>
-  <nav>
-    <div class="menu-label">PUSAT PEMBELAJARAN</div>
-    <button class="nav-btn active" onclick="go('dashboard',this)">🏠 Dashboard</button>
-    <button class="nav-btn" onclick="go('nota',this)">📚 Nota Pembelajaran</button>
-    <button class="nav-btn" onclick="go('penerokaan',this)">🔍 Penerokaan</button>
-    <button class="nav-btn" onclick="go('pengembangan',this)">🏗️ Pengembangan</button>
-    <button class="nav-btn" onclick="go('permainan',this)">🎮 Permainan</button>
-    <button class="nav-btn" onclick="go('latihan',this)">📝 Latihan</button>
-    <button class="nav-btn" onclick="go('tugasan',this)">📤 Hantar Tugasan</button>
-    <div class="menu-label">PENCAPAIAN</div>
-    <button class="nav-btn" onclick="go('penilaian',this)">🏆 Dashboard Penilaian</button>
-  </nav>
-</aside>
-
-<main class="main">
-<div class="topbar">
-  <h3>EDUCLASS / HISTORY QUEST</h3>
-  <span class="tag">🏺 Sejarah Tingkatan 1</span>
-</div>
-
-<section id="dashboard" class="page active">
-  <div class="hero">
-    <div class="overline">SELAMAT DATANG, PENJELAJAH MASA</div>
-    <h1>Jelajahi Dunia Sejarah</h1>
-    <p>Mulakan ekspedisi merentas zaman. Temui artifak, selesaikan misi dan bina pengetahuan sejarah melalui pengalaman interaktif.</p>
-    <button class="btn" onclick="go('nota')">Mulakan Ekspedisi →</button>
-  </div>
-
-  <div class="section-head">
-    <h2>Destinasi Pembelajaran</h2>
-    <span class="tag">4 Zaman</span>
-  </div>
-  <div class="timeline">
-    <div class="era" onclick="eraInfo('Paleolitik')">
-      <div class="em">🪨</div><b>Paleolitik</b><small>Zaman Batu Awal</small>
-    </div>
-    <div class="era" onclick="eraInfo('Mesolitik')">
-      <div class="em">🏹</div><b>Mesolitik</b><small>Zaman Batu Pertengahan</small>
-    </div>
-    <div class="era" onclick="eraInfo('Neolitik')">
-      <div class="em">🏺</div><b>Neolitik</b><small>Zaman Batu Baharu</small>
-    </div>
-    <div class="era" onclick="eraInfo('Logam')">
-      <div class="em">⚒️</div><b>Zaman Logam</b><small>Teknologi Logam</small>
-    </div>
-  </div>
-
-  <div class="section-head"><h2>Modul Pembelajaran</h2></div>
-  <div class="grid">
-    <div class="card">
-      <div class="symbol">📖</div>
-      <h3>Nota Sejarah</h3>
-      <p>Pelajari ciri kehidupan manusia prasejarah.</p>
-      <button onclick="go('nota')">Buka modul →</button>
-    </div>
-    <div class="card">
-      <div class="symbol">🔎</div>
-      <h3>Misi Arkeologi</h3>
-      <p>Teroka artifak dan temukan bukti sejarah.</p>
-      <button onclick="go('penerokaan')">Teroka →</button>
-    </div>
-    <div class="card">
-      <div class="symbol">🏗️</div>
-      <h3>Bina Zaman</h3>
-      <p>Lengkapkan diorama melalui soalan KBAT.</p>
-      <button onclick="go('pengembangan')">Lihat aktiviti →</button>
-    </div>
-    <div class="card">
-      <div class="symbol">🏆</div>
-      <h3>Pencapaian</h3>
-      <p>Pantau latihan dan perjalanan pembelajaran.</p>
-      <button onclick="go('penilaian')">Lihat pencapaian →</button>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <div class="panel">
-      <h3>🎯 Misi Pembelajaran</h3>
-      <div class="mission"><div class="num">01</div><div><b>Kenali Empat Zaman</b><p>Baca nota dan kenal pasti ciri utama.</p></div></div>
-      <div class="mission"><div class="num">02</div><div><b>Detektif Arkeologi</b><p>Selidiki bukti dan buat inferens.</p></div></div>
-      <div class="mission"><div class="num">03</div><div><b>Bina Dunia Prasejarah</b><p>Jawab soalan untuk membuka visual diorama.</p></div></div>
-      <div class="mission"><div class="num">04</div><div><b>Uji Kefahaman</b><p>Selesaikan latihan dan refleksi.</p></div></div>
-    </div>
-    <div class="panel">
-      <h3>📊 Kemajuan Ekspedisi</h3>
-      <p class="muted">Latihan contoh pertama boleh dicuba dalam menu Latihan.</p>
-      <p><b id="progress-label">0% selesai</b></p>
-      <div class="progress"><div id="progress-fill"></div></div>
-      <div class="notice">📜 Perjalanan sejarah bermula dengan satu penemuan.</div>
-      <button class="btn" onclick="go('latihan')">Cuba Latihan</button>
-    </div>
-  </div>
-</section>
-
-<section id="nota" class="page">
-  <div class="hero">
-    <div class="overline">MUZIUM PRASEJARAH DIGITAL</div>
-    <h1>Nota Interaktif Bab 3: Zaman Prasejarah</h1>
-    <p>Klik galeri dan objek pameran untuk meneroka nota secara interaktif seperti berada di muzium dunia nyata.</p>
-  </div>
-
-  <div class="panel">
-    <h3>🏛 Pilih Galeri</h3>
-    <p class="muted">Klik mana-mana galeri untuk membuka ruang pameran.</p>
-
-    <div class="grid" id="museum-gallery-list"></div>
-  </div>
-
-  <div class="two-col">
-    <div class="panel">
-      <h3>🧭 Ruang Pameran Interaktif</h3>
-      <p class="muted" id="museum-subtitle">Pilih galeri terlebih dahulu.</p>
-      <div id="museum-exhibits" class="grid"></div>
-    </div>
-
-    <div class="panel">
-      <h3>📜 Panel Nota</h3>
-      <div class="notice" id="museum-note-title">Belum ada objek dipilih.</div>
-      <div id="museum-note-content" class="muted">
-        Klik galeri terlebih dahulu, kemudian pilih objek pameran untuk melihat nota.
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="penerokaan" class="page">
-  <div class="hero">
-    <div class="overline">MISI 01 / PENYIASATAN</div>
-    <h1>Detektif Arkeologi</h1>
-    <p>Perhatikan artifak dan kumpulkan maklumat tentang kehidupan manusia prasejarah.</p>
-  </div>
-  <div class="panel">
-    <h3>🔍 Koleksi Artifak</h3>
-    <p class="muted">Klik setiap artifak untuk mendapatkan maklumat.</p>
-    <div class="grid">
-      <div class="card" onclick="artifact('Alat batu','Peralatan batu merupakan bukti penting kegiatan manusia prasejarah.')"><div class="symbol">🪨</div><h3>Alat Batu</h3><p>Klik untuk menyiasat.</p></div>
-      <div class="card" onclick="artifact('Tembikar','Tembikar digunakan dalam pelbagai kegiatan penyimpanan dan penyediaan makanan.')"><div class="symbol">🏺</div><h3>Tembikar</h3><p>Klik untuk menyiasat.</p></div>
-      <div class="card" onclick="artifact('Peralatan memburu','Peralatan memburu menunjukkan cara manusia mendapatkan sumber makanan.')"><div class="symbol">🏹</div><h3>Alat Memburu</h3><p>Klik untuk menyiasat.</p></div>
-      <div class="card" onclick="artifact('Peralatan logam','Kemahiran mengolah logam memberi kesan kepada teknologi dan kegiatan masyarakat.')"><div class="symbol">⚒️</div><h3>Alat Logam</h3><p>Klik untuk menyiasat.</p></div>
-    </div>
-    <div class="notice" id="artifact-result">Pilih artifak untuk memulakan penerokaan.</div>
-  </div>
-</section>
-
-<section id="pengembangan" class="page">
-  <div class="hero">
-    <div class="overline">MISI 02 / PEMBINAAN</div>
-    <h1>Bina Zaman Prasejarah</h1>
-    <p>Jawab soalan untuk melengkapkan petempatan, kegiatan, peralatan dan cara hidup bagi setiap zaman.</p>
-  </div>
-  <div class="panel">
-    <h3>🏗️ Ruang Permainan Interaktif</h3>
-    <p class="muted">Game HTML5 yang dibangunkan oleh ahli kumpulan akan dipaparkan di bahagian ini.</p>
-    <div class="notice">Game belum diintegrasikan. Ruang ini disediakan untuk modul diorama interaktif.</div>
-  </div>
-</section>
-
-<section id="permainan" class="page">
-  <div class="hero">
-    <div class="overline">EDUGAME LIBRARY</div>
-    <h1>Arkib Permainan Sejarah</h1>
-    <p>Koleksi permainan pendidikan untuk pelbagai tajuk dan tingkatan.</p>
-  </div>
-  <div class="panel">
-    <h3>🎮 Bina Zaman Prasejarah</h3>
-    <p class="muted">Permainan pertama EduClass akan disenaraikan di sini selepas berjaya diintegrasikan.</p>
-  </div>
-</section>
-
-<section id="latihan" class="page">
-  <div class="hero">
-    <div class="overline">CABARAN ILMU</div>
-    <h1>Uji Kefahaman Sejarah</h1>
-    <p>Jawab soalan untuk menguji kefahaman tentang perubahan kehidupan manusia prasejarah.</p>
-  </div>
-  <div class="panel">
-    <h3>🧠 Soalan Latihan Contoh</h3>
-    <p>Manusia mula mengusahakan pertanian dan menternak haiwan. Antara berikut, apakah perubahan yang berkaitan dengan perkembangan tersebut?</p>
-    <button class="option" onclick="answer(this,false)">A. Semua manusia terus hidup berpindah-randah</button>
-    <button class="option" onclick="answer(this,true)">B. Petempatan lebih kekal mula berkembang</button>
-    <button class="option" onclick="answer(this,false)">C. Penggunaan mesin moden menjadi kebiasaan</button>
-    <button class="option" onclick="answer(this,false)">D. Semua kegiatan mendapatkan makanan terhenti</button>
-    <div id="quiz-feedback" class="notice">Pilih satu jawapan.</div>
-  </div>
-</section>
-
-<section id="tugasan" class="page">
-  <div class="hero">
-    <div class="overline">STUDIO KREATIF</div>
-    <h1>Hantar Hasil Kerja</h1>
-    <p>Hasilkan poster dan infografik berdasarkan perjalanan pembelajaran sejarah.</p>
-  </div>
-  <div class="panel">
-    <h3>📤 Poster Zaman Prasejarah</h3>
-    <p class="muted">Ruang penghantaran poster akan dihubungkan kepada sistem storan EduClass.</p>
-    <label for="poster">Pilih fail untuk pratonton</label>
-    <input id="poster" type="file" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile(this)">
-    <div id="file-preview" class="notice">Belum ada fail dipilih.</div>
-    <p class="muted">Ini masih fungsi pratonton. Fail belum dihantar atau disimpan dalam database.</p>
-  </div>
-</section>
-
-<section id="penilaian" class="page">
-  <div class="hero">
-    <div class="overline">REKOD PENCAPAIAN</div>
-    <h1>Dashboard Penilaian</h1>
-    <p>Pantau perkembangan pembelajaran melalui latihan, aktiviti dan tugasan.</p>
-  </div>
-  <div class="panel">
-    <h3>🏆 Prestasi Latihan Contoh</h3>
-    <p id="result-text">Belum ada latihan diselesaikan.</p>
-    <div class="progress"><div id="result-bar"></div></div>
-    <p class="muted">Rekod ini hanya disimpan pada browser yang digunakan. Penilaian sebenar memerlukan database Supabase.</p>
-  </div>
-</section>
-
-</main>
-</div>
-
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+:root{--dark:#101c2a;--dark2:#182b3c;--gold:#e8b66c;--cream:#f6edd9;--muted:#aebdcb;--border:#ffffff26}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0e1825;color:#f4eddc;font-family:Outfit,Arial,sans-serif}button{font:inherit;cursor:pointer}button:focus-visible,[tabindex]:focus-visible{outline:3px solid #ffd18f;outline-offset:4px}.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,#152537,#0d1723);border-right:1px solid #ffffff15;padding:26px 15px;overflow:auto;z-index:20}.logo{font-family:Cinzel,serif;color:#f8d6a0;font-size:23px;font-weight:800;letter-spacing:-1px;margin:0 10px 3px}.micro{color:#94a9b9;font-size:10px;letter-spacing:2.3px;margin:0 10px 31px}.nav{display:block;width:100%;text-align:left;color:#b8c6d1;background:transparent;border:0;border-radius:12px;padding:13px 14px;margin:5px 0;font-size:14px;font-weight:600}.nav:hover,.nav.active{background:#e8b66c1c;color:#ffda9e}.nav.active{box-shadow:inset 3px 0 #d5a35a}.nav-label{color:#637b8b;font-size:10px;letter-spacing:2px;margin:23px 14px 10px;font-weight:800}.main{min-width:0;padding:25px clamp(15px,3vw,45px) 60px;max-width:1800px;width:100%;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:23px}.top strong{font-family:Cinzel;font-size:14px}.pill{background:#e9b66b1b;color:#f0c58b;border:1px solid #dfb2774d;border-radius:20px;padding:8px 13px;font-size:11px;font-weight:800}.screen{display:none;animation:appear .35s ease}.screen.active{display:block}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.hero{border:1px solid #ffffff24;border-radius:24px;background:radial-gradient(circle at 80% 35%,#a064342d,transparent 45%),linear-gradient(135deg,#203649,#172536 65%,#3b2d23);padding:38px;position:relative;overflow:hidden}.over{color:#f5bd73;letter-spacing:3px;font-size:11px;font-weight:800}.hero h1{font:800 clamp(28px,4.5vw,53px)/1.13 Cinzel,serif;margin:15px 0;max-width:850px}.hero p{line-height:1.8;color:#c5d0da;max-width:650px}.btn{border:0;border-radius:12px;background:linear-gradient(100deg,#e9b66a,#d19047);padding:13px 20px;color:#1b2835;font-weight:800;box-shadow:0 8px 30px #0003}.btn:hover{filter:brightness(1.1)}.btn.ghost{background:#ffffff15;color:#f9e8cb;border:1px solid #ffffff35;box-shadow:none}.btn.tiny{padding:9px 12px;font-size:12px}.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.sectiontitle{font:700 20px Cinzel,serif;margin:30px 0 16px}.tile{position:relative;background:linear-gradient(130deg,#213449,#182838);border:1px solid #ffffff1f;border-radius:18px;padding:22px;min-height:145px;transition:.2s;text-align:left;color:#f7ead5}.tile:hover{border-color:#deb377;transform:translateY(-4px);background:linear-gradient(130deg,#32475c,#1f2f42)}.tile .emoji{font-size:31px;display:block;margin-bottom:12px}.tile h3{font:700 16px Cinzel,serif;margin:0 0 8px}.tile p{font-size:12px;color:#b4c2cf;line-height:1.7;margin:0}.detail{margin-top:9px;font-size:11px;color:#efbc79;font-weight:800}.muted{color:#b7c3ce;line-height:1.8}.panel{border:1px solid #ffffff23;background:#162636;border-radius:18px;padding:22px}.gallerybar{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.gallerytab{background:#ffffff0c;color:#d1d9df;border:1px solid #ffffff25;padding:10px 13px;border-radius:11px;font-size:12px;font-weight:700}.gallerytab.selected{background:#e7ac5b;color:#1b2832;border-color:#edc184}.sceneHeader{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:15px 0}.sceneHeader h2{font:800 clamp(20px,3vw,31px) Cinzel,serif;margin:0}.sceneHeader p{font-size:13px;color:#bac6cd;margin:6px 0 0}.scene{height:clamp(380px,52vw,590px);border:1px solid #ffe5ab44;border-radius:23px;position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(to bottom,#9db6bc 0%,#deb98d 47%,#4c6653 48%,#263a31 100%);box-shadow:inset 0 -40px 80px #0b142390,0 25px 75px #0006;transition:background .6s}.scene[data-era="0"]{background:linear-gradient(to bottom,#a0b4be 0%,#c5b6a9 50%,#79847a 51%,#303c35 100%)}.scene[data-era="1"]{background:linear-gradient(to bottom,#8bb2bc 0%,#b5c5b7 47%,#477d6e 48%,#203f38 100%)}.scene[data-era="2"]{background:linear-gradient(to bottom,#7ec8d0 0%,#e4d4a1 47%,#6c9852 48%,#365b37 100%)}.scene[data-era="3"]{background:linear-gradient(to bottom,#dea974 0%,#e9b77d 47%,#947952 48%,#514634 100%)}.sun{position:absolute;width:100px;height:100px;border-radius:50%;background:#ffe8ac;box-shadow:0 0 110px 75px #ffd6a54a;top:8%;right:16%;opacity:.9}.mountains{position:absolute;inset:18% -5% auto;height:50%;background:#657a7f88;clip-path:polygon(0 75%,9% 44%,18% 65%,30% 10%,41% 62%,54% 28%,66% 65%,79% 8%,90% 53%,100% 19%,100% 100%,0 100%);filter:drop-shadow(0 20px 12px #161f2577)}.mountains.back{transform:translateY(-45px) scale(1.05);background:#c5c3b98a;opacity:.65}.water{position:absolute;right:-10%;bottom:3%;height:26%;width:60%;background:linear-gradient(160deg,#9dcbd0bf,#284f6077);clip-path:polygon(24% 0%,100% 0%,100% 100%,0 100%);transform:skewY(-6deg);border-radius:100% 0 0 0;box-shadow:inset 0 2px 15px #fff8}.ground{position:absolute;bottom:-20%;left:-10%;width:130%;height:51%;border-radius:50% 50% 0 0;background:radial-gradient(ellipse at 35% 12%,#9d8b5c,transparent 51%),linear-gradient(140deg,#536a46,#243d2f);transform:perspective(600px) rotateX(26deg);box-shadow:0 -12px 50px #1f362a55}.scene[data-era="2"] .ground{background:radial-gradient(ellipse at 40% 20%,#bf9c60,transparent 50%),linear-gradient(140deg,#74954a,#38552f)}.scene[data-era="3"] .ground{background:radial-gradient(ellipse at 40% 20%,#ab8452,transparent 50%),linear-gradient(140deg,#847448,#534632)}.sceneart{position:absolute;inset:0;z-index:3;pointer-events:none}.sceneart svg{width:100%;height:100%}.sceneart .world{transform-origin:50% 80%;animation:breathe 6s ease-in-out infinite;filter:drop-shadow(0 12px 11px #0006)}@keyframes breathe{50%{transform:translateY(-4px)}}.scene-caption{position:absolute;bottom:18px;left:19px;background:#0b1a28c9;border:1px solid #ffffff3d;border-radius:12px;padding:9px 13px;font-size:11px;color:#e8dcc5;z-index:7}.hotspot{position:absolute;z-index:8;border:1px solid #fff2c1;background:#1c2a3de8;color:#fff8e7;border-radius:14px;padding:10px 13px;transform:translate(-50%,-50%);box-shadow:0 0 0 6px #e1b36d26,0 9px 27px #0009;display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:13px;font-weight:800;animation:float 3s ease-in-out infinite;max-width:calc(100% - 20px)}.hotspot:hover{background:#e7b469;color:#152331;z-index:10}.hotspot.visited{background:#3a6655;border-color:#97ddb7}.hotspot .dot{font-size:19px}@keyframes float{50%{transform:translate(-50%,-57%)}}.time-controls{display:flex;justify-content:space-between;align-items:center;gap:9px;margin:15px 0;flex-wrap:wrap}.eras{display:flex;flex:1;flex-wrap:wrap;gap:7px;justify-content:center}.era-btn{border:1px solid #ffffff3a;background:#ffffff11;color:#d8e0e6;border-radius:20px;padding:10px 15px;font-size:12px;font-weight:800}.era-btn.active{background:#f0c585;color:#24303c}.hint{font-size:12px;color:#9aafbd;margin:0 0 15px}.drawer{position:fixed;inset:0;background:#03090dbe;z-index:60;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(8px)}.drawer.open{display:flex}.drawer-card{width:min(670px,100%);max-height:88vh;overflow:auto;background:linear-gradient(160deg,#283a47,#142331);color:#f9efd9;border:1px solid #e2bb7f88;box-shadow:0 30px 90px #000b;border-radius:22px;padding:28px;animation:appear .25s ease}.drawer-header{display:flex;align-items:start;justify-content:space-between;gap:14px}.drawer h2{font:800 25px Cinzel,serif;margin:8px 0 12px}.close{border:1px solid #ffffff44;border-radius:50%;width:37px;height:37px;background:#ffffff16;color:white;font-size:20px}.notecontent{line-height:1.9;color:#d6e0e3;font-size:15px}.notecontent p{margin:10px 0}.source{margin-top:16px;padding:12px;border-radius:9px;background:#fff0d00c;border:1px solid #e7b46e2e;color:#deb777;font-size:12px}.note-question{margin-top:20px;background:#d6a25f17;border-left:3px solid #e5ba77;padding:16px;border-radius:8px;font-size:14px}.journey{display:flex;align-items:center;gap:9px;margin:19px 0;color:#c1d0d8;font-size:12px}.bar{height:8px;background:#ffffff23;border-radius:30px;flex:1;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,#b9833c,#efce91);width:0;transition:width .4s}.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.fact{border-radius:12px;background:#ffffff0d;padding:14px;border:1px solid #ffffff24}.fact b{display:block;font-size:13px;color:#f1d29d}.fact small{display:block;color:#b6c9d1;margin-top:6px;font-size:12px;line-height:1.6}.track{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.step{border:1px solid #ffffff22;border-radius:11px;background:#ffffff0e;padding:13px 15px;font-weight:700;font-size:12px}.step.done{background:#4a806641;border-color:#7bca9b;color:#b4f0c6}.simple-input{padding:12px;background:#fff;color:#172533;border:1px solid #bec8d0;border-radius:11px;width:100%;font:inherit}.quiz-choice{display:block;width:100%;text-align:left;border:1px solid #ffffff3b;background:#ffffff10;border-radius:12px;padding:14px;color:white;margin:8px 0}.quiz-choice:hover{background:#ffffff23}.quiz-choice.good{background:#276b4b}.quiz-choice.bad{background:#7c3434}.visuallyhidden{position:absolute;left:-10000px}.footer{color:#8599a9;font-size:11px;margin-top:30px;line-height:1.6}@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{height:auto;position:relative;padding:12px}.logo{font-size:20px}.micro{margin-bottom:8px}.sidebar nav{display:flex;gap:5px;overflow:auto}.nav{white-space:nowrap;width:auto;min-width:max-content}.nav-label{display:none}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.main{padding:15px 12px 40px}.hero{padding:24px}.g2,.g3{grid-template-columns:1fr}.scene{height:440px}.hotspot{font-size:11px;padding:9px;white-space:normal;text-align:left}.hotspot .dot{font-size:15px}.scene-caption{font-size:10px;left:7px;bottom:7px}.sceneHeader{align-items:start}.drawer-card{padding:19px}.fact-grid{grid-template-columns:1fr}.time-controls>.btn{padding:9px 12px;font-size:11px}}
+</style></head>
+<body><div class="app"><aside class="sidebar"><div class="logo">⌛ EDUCLASS</div><div class="micro">HISTORY QUEST · 2026</div><nav id="nav"><div class="nav-label">PENGEMBARAAN</div><button class="nav active" data-screen="home">🏠 Dashboard</button><button class="nav" data-screen="museum">🏛️ Nota · Dunia Prasejarah</button><button class="nav" data-screen="explore">🔎 Misi Arkeologi</button><button class="nav" data-screen="build">🏗️ Pengembangan</button><button class="nav" data-screen="games">🎮 Permainan</button><button class="nav" data-screen="quiz">📝 Latihan</button><button class="nav" data-screen="upload">📤 Tugasan</button><button class="nav" data-screen="score">🏆 Pencapaian</button></nav></aside>
+<main class="main"><div class="top"><strong>EDUCLASS <span style="color:#bc955c">/ EKSPEDISI MASA</span></strong><span class="pill">SEJARAH TINGKATAN 1 · BAB 3</span></div>
+<section id="home" class="screen active"><div class="hero"><div class="over">PORTAL PENGEMBARAAN MASA · BAB 3</div><h1>Bukan Sekadar Baca Sejarah. <span style="color:#e8b66c">Masuk ke Dalamnya.</span></h1><p>Rentasi empat zaman prasejarah, terokai pemandangan, sentuh artifak dan temukan nota tersembunyi. Setiap penemuan membuka satu kisah.</p><button class="btn" onclick="navigate('museum')">🚪 Masuk Portal Masa</button></div><h2 class="sectiontitle">Destinasi Ekspedisi</h2><div class="g4" id="homeEras"></div><h2 class="sectiontitle">Laluan Pembelajaran</h2><div class="g3"><button class="tile" onclick="navigate('museum')"><span class="emoji">🏛️</span><h3>Muzium Hidup</h3><p>Jelajahi kesemua 5 subtopik Bab 3 secara interaktif.</p><span class="detail">MASUK GALERI ↗</span></button><button class="tile" onclick="navigate('explore')"><span class="emoji">🔍</span><h3>Detektif Arkeologi</h3><p>Kenali bukti sejarah melalui misi ringkas.</p><span class="detail">MULA MISI ↗</span></button><button class="tile" onclick="navigate('quiz')"><span class="emoji">🏆</span><h3>Uji Ekspedisi</h3><p>Uji pengetahuan selepas melawat dunia prasejarah.</p><span class="detail">CUBA LATIHAN ↗</span></button></div></section>
+<section id="museum" class="screen"><div class="sceneHeader"><div><span class="over">MUZIUM DIGITAL · NOTA INTERAKTIF</span><h2>Portal Merentas Zaman</h2><p>Pilih zaman, kemudian sentuh artifak bercahaya untuk membuka nota.</p></div><span class="pill" id="eraPeriod"></span></div><div class="scene" id="scene" data-era="0"><div class="sun"></div><div class="mountains back"></div><div class="mountains"></div><div class="water"></div><div class="ground"></div><div id="sceneart" class="sceneart" aria-hidden="true"></div><div id="hotspots"></div><div class="scene-caption">🧭 Ilustrasi rekonstruksi imaginatif · klik ikon artifak</div></div><div class="time-controls"><button class="btn ghost tiny" id="prevEra">← Zaman lalu</button><div class="eras" id="eraButtons"></div><button class="btn tiny" id="nextEra">Zaman seterusnya →</button></div><div class="journey"><span id="exploredText">Penemuan: 0</span><div class="bar"><div id="exploredBar"></div></div></div><p class="hint">💡 Pemandangan menggunakan lapisan perspektif 2.5D dengan animasi. Ia bukan enjin 3D bebas bergerak; semua nota hanya muncul apabila objek ditekan.</p><h2 class="sectiontitle">🏛️ Galeri Bab 3 · Nota Lengkap</h2><p class="muted">Pengembaraan empat zaman di atas fokus pada cara hidup (3.3). Lima galeri berikut melengkapkan keseluruhan Bab 3—pilih galeri, kemudian klik objek untuk membaca.</p><div id="galleryTabs" class="gallerybar"></div><div class="panel"><div class="sceneHeader"><div><h2 id="galleryTitle" style="font-size:20px">Pilih galeri</h2><p id="galleryDesc">Setiap kapsul menyimpan nota yang perlu diteroka.</p></div><span class="pill" id="galleryCount"></span></div><div class="g3" id="galleryObjects"></div></div></section>
+<section id="explore" class="screen"><div class="hero"><div class="over">MISI DETEKTIF ARKEOLOGI</div><h1>Jejak Bukti Masa Silam</h1><p>Setiap objek ditemui oleh ahli arkeologi memberi petunjuk tentang kehidupan manusia dahulu.</p></div><h2 class="sectiontitle">Klik Bukti Penemuan</h2><div class="g3" id="exploreObjects"></div></section>
+<section id="build" class="screen"><div class="hero"><div class="over">MISI PEMBINAAN DUNIA</div><h1>Bina Zaman Prasejarah</h1><p>Ruang untuk permainan HTML5 diorama 3D kumpulan kau—objek diorama muncul selepas murid menjawab soalan dengan tepat.</p></div><div class="panel" style="margin-top:22px"><h2>🏗️ Integrasi game</h2><p class="muted">Game berasingan belum dimasukkan. Bila fail game HTML5 dah siap, kita sambungkan di sini menggunakan iframe. Pemandangan muzium di atas sudah boleh diteroka.</p></div></section>
+<section id="games" class="screen"><div class="hero"><div class="over">PERPUSTAKAAN PERMAINAN</div><h1>Arkib EduGame</h1><p>Permainan sejarah boleh disambungkan kemudian tanpa menukar reka bentuk EduClass.</p></div><div class="panel" style="margin-top:22px">🎮 Bina Zaman Prasejarah — belum diintegrasikan.</div></section>
+<section id="quiz" class="screen"><div class="hero"><div class="over">CABARAN PENJELAJAH</div><h1>Kuiz Ekspedisi Prasejarah</h1><p>Tiga soalan ulang kaji pantas untuk menguji perkara yang ditemui semasa penerokaan.</p></div><div class="panel" style="margin-top:22px"><div id="quizArea"></div><div id="quizFeedback" style="margin-top:10px"></div></div></section>
+<section id="upload" class="screen"><div class="hero"><div class="over">STUDIO SEJARAH</div><h1>Hantar Tugasan</h1><p>Pilih poster atau infografik Bab 3 untuk pratonton fail sebelum sistem penghantaran sebenar disambungkan.</p></div><div class="panel" style="margin-top:22px"><label for="file">Pilih fail gambar atau PDF</label><input class="simple-input" id="file" type="file" accept="image/*,.pdf"><p id="fileName" class="muted">Belum ada fail dipilih.</p><p class="muted">⚠️ Ini pratonton tempatan sahaja. Tiada fail dihantar ke guru atau disimpan dalam pangkalan data.</p></div></section>
+<section id="score" class="screen"><div class="hero"><div class="over">REKOD EKSPEDISI</div><h1>Catatan Penjelajah</h1><p>Jejaki artifak yang sudah ditemui menggunakan peranti yang sama.</p></div><div class="panel" style="margin-top:22px"><h2 id="scoreNum">0 penemuan</h2><div class="bar"><div id="scoreBar"></div></div><p class="muted">Kemajuan demonstrasi disimpan pada browser sahaja. Belum ada akaun, penyelarasan merentas peranti atau rekod guru.</p><button class="btn ghost tiny" id="resetProgress">Reset kemajuan demo</button></div></section>
+<footer class="footer">Sumber nota: Buku Teks Sejarah Tingkatan 1, Bab 3, hlm. 44–73 (KPM/DBP, 2016). Penerangan disusun semula untuk pembelajaran. Ilustrasi pemandangan ialah gambaran konseptual, bukan rekonstruksi arkeologi berskala tepat.</footer>
+</main></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="noteHeading"><div class="drawer-card"><div class="drawer-header"><div><span class="over" id="noteSection">PENEMUAN SEJARAH</span><h2 id="noteHeading"></h2></div><button class="close" id="closeDrawer" aria-label="Tutup nota">×</button></div><div class="notecontent" id="noteBody"></div><div class="source" id="noteSource"></div><div class="note-question" id="noteQuestion"></div><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn tiny" onclick="closeNote()">✓ Saya sudah teroka</button><button class="btn ghost tiny" onclick="closeNote()">Kembali ke pemandangan</button></div></div></div>
 <script>
-
-const museumData = {
-  maksud: {
-    title: "3.1 Maksud Zaman Prasejarah",
-    icon: "⏳",
-    exhibits: [
-      ["📜", "Maksud Prasejarah", "Zaman sebelum manusia mengetahui dan mengenal sistem tulisan. Bukti kehidupan dikaji melalui tinggalan arkeologi."],
-      ["🪨", "Zaman Batu", "Terbahagi kepada Paleolitik, Mesolitik dan Neolitik. Peralatan batu menjadi salah satu ciri utama perkembangan teknologi."],
-      ["⚒️", "Zaman Logam", "Manusia menghasilkan peralatan daripada logam, termasuk gangsa dan besi."]
-    ]
-  },
-  lokasi: {
-    title: "3.2 Lokasi Zaman Prasejarah di Dunia",
-    icon: "🌍",
-    exhibits: [
-      ["🗺️", "Tapak Prasejarah Dunia", "Tapak arkeologi di pelbagai benua membuktikan kewujudan dan perkembangan masyarakat prasejarah."],
-      ["🏕️", "Tapak Petempatan", "Penemuan tempat tinggal, perkakas dan sisa makanan membantu ahli arkeologi mengkaji cara hidup manusia awal."],
-      ["🔎", "Bukti Arkeologi", "Fosil, artifak dan tinggalan struktur memberi maklumat tentang kehidupan pada masa lampau."]
-    ]
-  },
-  ciri: {
-    title: "3.3 Ciri-ciri Kehidupan Manusia",
-    icon: "🏕️",
-    exhibits: [
-      ["🏠", "Tempat Kediaman", "Manusia prasejarah menggunakan gua, kawasan terbuka dan tempat perlindungan. Petempatan lebih kekal berkembang apabila kegiatan menghasilkan makanan semakin meluas."],
-      ["🪓", "Peralatan", "Peralatan berkembang daripada batu yang ringkas kepada peralatan yang lebih halus dan penggunaan logam."],
-      ["🌾", "Kegiatan Ekonomi", "Kegiatan merangkumi memburu, menangkap ikan, mengumpulkan makanan, pertanian, penternakan dan pertukaran barangan."],
-      ["👥", "Organisasi Sosial", "Organisasi sosial berkembang daripada kelompok kecil kepada komuniti yang lebih tersusun."],
-      ["🍎", "Pengumpulan Makanan", "Pada peringkat awal, manusia mengumpulkan hasil hutan dan sumber semula jadi. Pertanian dan penternakan kemudian mengurangkan pergantungan kepada pengumpulan makanan."],
-      ["🌀", "Kepercayaan", "Amalan pengebumian dan objek tertentu memberikan petunjuk tentang kepercayaan masyarakat prasejarah."],
-      ["🎨", "Kesenian dan Kebudayaan", "Lukisan gua, tembikar, perhiasan dan pelbagai hasil seni memperlihatkan kreativiti masyarakat prasejarah."]
-    ]
-  },
-  sumbangan: {
-    title: "3.4 Kesinambungan Sumbangan Prasejarah",
-    icon: "🏺",
-    exhibits: [
-      ["🌱", "Pertanian", "Kegiatan pertanian yang berkembang sejak zaman prasejarah menjadi asas kepada penghasilan makanan hingga hari ini."],
-      ["🐐", "Penternakan", "Penternakan membolehkan manusia mendapatkan sumber makanan dan kegunaan lain daripada haiwan."],
-      ["🔨", "Peralatan", "Penciptaan alat membantu kerja harian dan menjadi asas perkembangan teknologi."],
-      ["🏺", "Tembikar", "Tembikar digunakan untuk tujuan seperti menyimpan dan menyediakan makanan."],
-      ["🌀", "Ideofak", "Ideofak berkaitan dengan hasil pemikiran, kepercayaan dan amalan masyarakat."],
-      ["🏛️", "Seni Bina", "Pembinaan petempatan dan struktur menunjukkan perkembangan kemahiran manusia membina tempat perlindungan."]
-    ]
-  },
-  malaysia: {
-    title: "3.5 Zaman Prasejarah di Malaysia",
-    icon: "🇲🇾",
-    exhibits: [
-      ["📍", "Tapak Prasejarah", "Penemuan tapak arkeologi di Malaysia membuktikan kewujudan manusia prasejarah di negara kita."],
-      ["🪨", "Teknologi", "Penemuan peralatan batu dan logam menunjukkan perkembangan kemahiran menghasilkan alat."],
-      ["🏺", "Tinggalan Arkeologi", "Artifak, rangka manusia, tembikar dan lukisan gua membantu penyelidik memahami kehidupan masyarakat."],
-      ["🌾", "Kegiatan Ekonomi", "Kegiatan seperti memburu, menangkap ikan, mengumpulkan sumber alam dan pertanian memenuhi keperluan kehidupan."],
-      ["🌀", "Kepercayaan", "Bukti pengebumian dan objek yang ditemui memberikan gambaran tentang kepercayaan masyarakat prasejarah."]
-    ]
-  }
+const eras=[
+ {name:'Paleolitik',period:'2.5 juta tahun – 8,000 SM',icon:'🪨',hint:'Zaman Batu Lama',scene:['Gua dan tempat perlindungan','Peralatan batu kasar','Memburu dan mengumpul makanan','Kelompok kecil'],hotspots:[['🏔️','Gua',27,37,'rumah'],['🪨','Batu',69,72,'alat'],['🏹','Pemburu',46,69,'ekonomi'],['🌿','Sumber alam',80,42,'makanan']]},
+ {name:'Mesolitik',period:'12,000 – 4,000 SM',icon:'🏹',hint:'Zaman Batu Pertengahan',scene:['Pinggir sungai dan pesisir','Peralatan mikrolit','Menangkap ikan','Kelompok nomad'],hotspots:[['🏕️','Tempat berlindung',26,35,'rumah'],['🪓','Mikrolit',67,66,'alat'],['🐟','Menangkap ikan',79,36,'ekonomi'],['🐚','Kerang',43,73,'makanan']]},
+ {name:'Neolitik',period:'10,000 – 2,000 SM',icon:'🌾',hint:'Zaman Batu Baharu',scene:['Petempatan lebih kekal','Pertanian dan penternakan','Tembikar dan alat digilap','Organisasi sosial berkembang'],hotspots:[['🏠','Rumah',27,33,'rumah'],['🏺','Tembikar',70,71,'alat'],['🌾','Ladang',45,66,'ekonomi'],['🐐','Ternakan',79,40,'makanan']]},
+ {name:'Logam',period:'3,500 SM – 500 M',icon:'⚒️',hint:'Zaman Gangsa dan Besi',scene:['Petempatan tersusun','Alat gangsa dan besi','Perdagangan tukar barang','Pentadbiran komuniti'],hotspots:[['🏘️','Petempatan',24,36,'rumah'],['⚒️','Relau logam',69,69,'alat'],['⛵','Perdagangan',78,39,'ekonomi'],['👑','Pemimpin',44,71,'sosial']]}
+];
+const aspects={
+ rumah:['Tempat Kediaman',52,['Paleolitik: Gua, lubang bawah tanah, bawah pokok dan pondok ranting.','Mesolitik: Gua dan pondok ranting; tumpuan di pinggir sungai serta laut.','Neolitik: Petempatan lebih tetap di lembah sungai dan pesisir; rumah daripada batu, tanah liat dan kayu.','Logam: Kediaman lebih tersusun, termasuk kawasan tanah tinggi.'],'Mengapa petempatan berhampiran sungai penting kepada manusia?'],
+ alat:['Peralatan',53,['Paleolitik: Batu, kayu dan tulang; alat ringkas serta kasar.','Mesolitik: Alat lebih kemas; mikrolit, panah dan perangkap ikan.','Neolitik: Alat lebih halus dan digilap; termasuk alat menggali serta roda.','Logam: Teknologi peleburan, acuan dan peralatan tembaga, gangsa serta besi.'],'Bagaimanakah perubahan alat membuktikan kreativiti manusia?'],
+ makanan:['Pengumpulan Makanan',54,['Paleolitik: Mengumpulkan buah liar, cendawan, bijiran dan pucuk tumbuhan selain memburu.','Mesolitik: Terus mengumpul hasil alam termasuk siput dan kerang di sungai serta pesisir.','Neolitik: Pengumpulan berkurang apabila pertanian dan penternakan berkembang.','Logam: Pertanian, ternakan dan tukar barang menjadikan pengumpulan makanan semakin kurang penting.'],'Mengapa kegiatan mengumpul makanan semakin berkurang?'],
+ ekonomi:['Kegiatan Ekonomi',55,['Paleolitik: Nomad; memburu dan mengumpul untuk sara diri serta berkongsi makanan.','Mesolitik: Mengutip hasil hutan, memburu dan menangkap ikan.','Neolitik: Menghasilkan makanan sendiri melalui bercucuk tanam dan menternak; barter dan pengkhususan kerja bermula.','Logam: Pertanian, penternakan, pertukaran barang dan kerja pertukangan berkembang.'],'Apakah kesan pertanian terhadap corak hidup menetap?'],
+ sosial:['Organisasi Sosial',56,['Paleolitik: Kelompok kecil beberapa keluarga dan hidup secara nomad.','Mesolitik: Kelompok kecil, masih nomad dan organisasi sosial belum tersusun.','Neolitik: Petempatan tetap, ketua dan pembahagian kedudukan sosial.','Logam: Kepimpinan, peraturan dan pentadbiran komuniti semakin tersusun.'],'Mengapakah sesebuah masyarakat memerlukan pemimpin?'],
+ percaya:['Kepercayaan',57,['Paleolitik: Animisme; menganggap unsur alam dan objek tertentu mempunyai kuasa.','Mesolitik: Kepercayaan animisme masih diamalkan.','Neolitik: Ritual, penyembahan dan kepercayaan kehidupan selepas mati; pengebumian lebih teliti.','Logam: Upacara ritual dan binaan khusus bagi kepercayaan semakin jelas.'],'Apakah yang boleh difahami daripada amalan pengebumian?'],
+ seni:['Kesenian dan Kebudayaan',58,['Paleolitik: Lukisan gua berciri realisme.','Mesolitik: Lukisan gua masih dihasilkan.','Neolitik: Corak geometri dan simbolisme pada tembikar.','Logam: Estetika pada peralatan seperti gendang gangsa berhias.'],'Mengapa lukisan gua penting sebagai sumber sejarah?']
 };
-
-function renderMuseumGalleries() {
-  const area = document.getElementById("museum-gallery-list");
-  if (!area) return;
-
-  area.innerHTML = Object.entries(museumData).map(([key, g]) => `
-    <div class="card gallery-card" onclick="openGallery('${key}')">
-      <div class="symbol">${g.icon}</div>
-      <h3>${g.title}</h3>
-      <p>Klik untuk memasuki galeri →</p>
-    </div>
-  `).join("");
+const galleries=[
+ {id:'3.1',name:'Maksud Prasejarah',icon:'⏳',desc:'Kenali nirleka, pembahagian zaman dan kronologi.',items:[
+ ['📜','Maksud Nirleka',46,['Prasejarah bermaksud zaman sebelum manusia mengetahui dan mengenal tulisan.','Dalam buku teks, istilah Sanskrit nirleka terdiri daripada nir (tiada) dan leka (tulisan).','Kajian bukti arkeologi membantu menjelaskan kehidupan pada masa ini.'],'Bagaimanakah kita mengetahui sejarah zaman tanpa tulisan?'],
+ ['🪨','Tiga Zaman Batu',46,['Paleolitik ialah Zaman Batu Lama dengan alat ringkas.','Mesolitik ialah Zaman Batu Pertengahan yang memperlihatkan penggunaan alat lebih kemas.','Neolitik ialah Zaman Batu Baharu dengan kemajuan pertanian, penternakan dan tembikar.'],'Mengapa kehidupan manusia berubah dari satu zaman ke zaman lain?'],
+ ['⚒️','Zaman Logam',47,['Masyarakat menggunakan teknologi gangsa dan besi dalam peralatan.','Antara kegiatan yang berkembang ialah pelayaran serta pertukaran barangan.','Alat termasuk kapak besi bersoket, beliung dan mata lembing.'],'Apakah kelebihan alat logam berbanding alat batu?'],
+ ['⌛','Garis Masa',47,['Menurut garis masa dalam buku teks: Paleolitik 2.5 juta tahun – 8,000 SM; Mesolitik 12,000 – 4,000 SM.','Neolitik 10,000 – 2,000 SM; Zaman Logam 3,500 SM – 500 M.','Tempoh ini ialah julat pengajaran dalam buku teks dan bertindih antara zaman mengikut tempat.'],'Mengapakah tempoh masa zaman boleh bertindih?']
+ ]},
+ {id:'3.2',name:'Lokasi Dunia',icon:'🌍',desc:'Tapak arkeologi dunia dan Asia Tenggara.',items:[
+ ['🗺️','Bagaimana Tapak Dikesan?',48,['Tapak prasejarah dikenal pasti melalui artifak dan ekofak.','Tapak terbuka seperti lembah sungai dan tapak tertutup seperti gua menunjukkan pelbagai fungsi kehidupan.','Tapak termasuk petempatan, perkuburan, perburuan serta kawasan membuat alatan.'],'Bagaimanakah ekofak berbeza daripada artifak?'],
+ ['🐂','Gua Chauvet & Altamira',48,['Gua Chauvet, Perancis mempunyai lukisan gua dan bukti kegiatan memburu.','Altamira, Sepanyol juga mempunyai lukisan gua yang menggambarkan kebudayaan masyarakat silam.','Lukisan haiwan membolehkan ahli sejarah membuat tafsiran tentang kegiatan manusia.'],'Apakah maklumat yang boleh ditafsirkan daripada lukisan haiwan?'],
+ ['🏛️','Stonehenge & Göbekli Tepe',49,['Stonehenge di Britain dikaitkan dalam buku teks dengan ritual dan kajian bintang.','Göbekli Tepe di Turki mempunyai binaan batu yang dikaitkan dengan amalan ritual.','Kedua-duanya memperlihatkan keupayaan membina struktur untuk kegunaan masyarakat.'],'Mengapakah monumen purba perlu dipelihara?'],
+ ['🏘️','Tapak Dunia Lain',48,['Çatalhöyük di Turki menunjukkan kegiatan pertanian.','Bhimbetka di India mempunyai bukti prasejarah, manakala Zhoukoudian di China berkait dengan tinggalan manusia awal.','Shahr-i-Sokhta, Iran mempunyai kawasan kediaman, perkuburan dan pembuatan barangan.'],'Mengapakah lokasi petempatan membantu kita memahami kehidupan dahulu?'],
+ ['🌾','Ban Chiang & Lenggong',50,['Ban Chiang, Thailand menunjukkan pertanian, tekstil, tembikar dan pembuatan logam.','Lenggong, Perak menunjukkan kehidupan merentas Paleolitik, Hoabinhian dan Neolitik.','Penemuan Perak Man merupakan bukti penting prasejarah negara.'],'Mengapakah Lenggong penting kepada sejarah Asia Tenggara?'],
+ ['🏝️','Tapak Asia Tenggara',50,['Gua Liang Bua, Flores berkait dengan penemuan Homo floresiensis.','Gua Tabon, Filipina mempunyai penemuan rangka manusia; Gua Padah-lin terletak di Myanmar.','Sa Huynh, Vietnam dikenal pasti sebagai tapak Zaman Besi dengan kegiatan tembikar.'],'Apakah persamaan penemuan tapak di Asia Tenggara?']
+ ]},
+ {id:'3.3',name:'Ciri Kehidupan',icon:'🏕️',desc:'Bandingkan empat zaman melalui tujuh aspek.',items:Object.entries(aspects).map(([k,a])=>[({rumah:'🏠',alat:'🪓',makanan:'🍎',ekonomi:'🌾',sosial:'👥',percaya:'🌀',seni:'🎨'})[k],a[0],a[1],a[2],a[3]])},
+ {id:'3.4',name:'Sumbangan',icon:'🌱',desc:'Warisan prasejarah yang berterusan hingga kini.',items:[
+ ['🌾','Pertanian',60,['Pertanian menjadi kegiatan penting sejak Neolitik; tanaman termasuk padi, gandum dan barli.','Pengeluaran makanan membantu perkembangan petempatan.','Kini pertanian berkembang menjadi kegiatan komersial menggunakan peralatan moden.'],'Apakah kesinambungan pertanian prasejarah dalam kehidupan kini?'],
+ ['🏹','Memburu Binatang',61,['Memburu telah lama menjadi usaha memperoleh makanan.','Manusia menggunakan alat batu, tulang, kayu dan kemudian logam, termasuk tombak serta panah.','Buku teks menerangkan amalan moden yang dikawal oleh peraturan dan lesen.'],'Mengapakah pemburuan perlu dikawal pada masa kini?'],
+ ['🐐','Menternak Binatang',61,['Penternakan bermula sejak Neolitik sebagai sumber makanan yang berterusan.','Pada masa kini penternakan berlangsung secara sara diri dan komersial.','Daging dan tenusu dihasilkan untuk keperluan masyarakat.'],'Mengapa penternakan memudahkan manusia tinggal menetap?'],
+ ['🛠️','Peralatan',62,['Alat awal diperbuat daripada batu, kayu dan tulang.','Penggunaan peleburan, acuan serta suhu membolehkan alat gangsa dan besi dihasilkan.','Pada masa moden banyak kerja disokong mesin dan jentera.'],'Apakah perubahan paling ketara antara peralatan dahulu dan kini?'],
+ ['🏺','Tembikar',62,['Tembikar digunakan sebagai bekas makanan, peralatan masakan serta dalam upacara ritual.','Kemahiran membuat tembikar berterusan menjadi kegiatan perusahaan.','Labu sayong di Kuala Kangsar ialah contoh industri tembikar di Malaysia.'],'Mengapakah kemahiran menghasilkan tembikar masih relevan?'],
+ ['🌀','Ideofak',63,['Ideofak ialah tinggalan yang berkaitan ideologi dan kepercayaan.','Bukti pengebumian menunjukkan cara penghormatan terhadap orang yang meninggal.','Contoh dalam buku teks termasuk penggunaan batu sebagai alas kepala di Gua Cha, Kelantan.'],'Apakah nilai yang dapat dihayati melalui amalan menghormati si mati?'],
+ ['🏛️','Monumen dan Seni Bina',63,['Masyarakat sejak Neolitik membina struktur untuk pelbagai tujuan.','Sebahagian binaan kekal sebagai warisan dan sumber pengetahuan sejarah.','Kemahiran seni bina berkembang hingga menghasilkan bangunan moden yang kompleks.'],'Mengapa monumen lama harus dipelihara?']
+ ]},
+ {id:'3.5',name:'Malaysia',icon:'🇲🇾',desc:'Tapak, teknologi, ekonomi dan kepercayaan di negara kita.',items:[
+ ['📍','Tapak dan Hoabinhian',64,['Buku teks membincangkan penempatan manusia di Malaysia sejak sekurang-kurangnya puluhan ribu tahun dahulu.','Zaman Mesolitik di Asia Tenggara juga dikaitkan dengan Hoabinhian atau Epi-Paleolitik.','Tapak terdapat di gua dan kawasan terbuka.'],'Mengapakah penemuan tapak di Malaysia penting?'],
+ ['🗺️','Contoh Tapak Malaysia',65,['Paleolitik: Tingkayu, Sabah; Gua Niah, Sarawak; Kota Tampan, Perak; Lembah Mansuli, Sabah.','Hoabinhian: Jenderam Hilir, Selangor; Gua Madai, Sabah; Gua Cha, Kelantan; Bukit Tegun Lembu, Perlis.','Neolitik: Gua Kecil, Pahang; Sungai Tembeling, Pahang; Lubang Angin, Sarawak; Gua Tapadong, Sabah.','Logam: Sungai Tembeling, Pahang dan Lembah Bernam, Selangor.'],'Tapak manakah terletak paling dekat dengan negeri kamu?'],
+ ['🪓','Teknologi Batu dan Logam',66,['Kota Tampan dan Tingkayu menunjukkan bukti pembuatan peralatan batu.','Peralatan Neolitik yang digilap ditemui di Hulu Perak.','Penemuan peralatan logam di Klang menunjukkan bukti Zaman Logam.'],'Mengapakah teknik menggilap batu merupakan kemajuan teknologi?'],
+ ['🏺','Tembikar dan Manik',66,['Tembikar dengan pelbagai bentuk dan corak ditemui di Gua Niah, Sarawak.','Manik ditemui di Kuala Selinsing, Perak dan Lembah Bernam, Selangor.','Penemuan memperlihatkan inovasi serta kesenian masyarakat prasejarah.'],'Apakah yang boleh ditafsir daripada perhiasan manik?'],
+ ['🎨','Lukisan Gua dan Ukiran Batu',67,['Lukisan gua dan ukiran batu menjadi bukti kegiatan harian, komunikasi dan ritual.','Bahan warna yang digunakan termasuk arang serta oker merah.','Antara contoh ialah Gua Tambun, Perak; Gua Niah, Sarawak; dan ukiran batu Pengkalan Kempas, Negeri Sembilan.'],'Mengapa kita perlu memelihara lukisan gua?'],
+ ['🌾','Ekonomi di Malaysia',68,['Paleolitik dan Hoabinhian: Memburu serta mengumpulkan hasil hutan untuk sara diri.','Neolitik: Penanaman padi, termasuk di Hulu Tembeling, Jenderam Hilir dan Lembah Nenggiri.','Pertukaran barangan melalui daratan dan laut; penemuan loceng serta gendang gangsa ialah bukti penting.'],'Bagaimana pertanian mempengaruhi hubungan antara komuniti?'],
+ ['⚱️','Kepercayaan dan Pengebumian',69,['Pengebumian memanjang: Gua Cha, Kelantan. Pengebumian melentur: Gua Gunung Runtuh, Perak.','Keranda kayu: Pantai Timur Sabah; kubur kepingan batu: Lembah Bernam; pengebumian perahu: Kuala Selinsing.','Budaya megalit seperti di Pengkalan Kempas turut berkait dengan kepercayaan dan ritual.'],'Bagaimanakah tinggalan perkuburan membantu penyelidik memahami kepercayaan?']
+ ]}
+];
+let era=0, gallery=0, qa=0, scoreQuiz=0;
+let visited;try{visited=new Set(JSON.parse(localStorage.getItem('educlass-v3-visited')||'[]'))}catch{visited=new Set()}
+function save(){try{localStorage.setItem('educlass-v3-visited',JSON.stringify([...visited]))}catch{}}
+function navigate(screen){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===screen));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.screen===screen));window.scrollTo({top:0,behavior:'smooth'});if(screen==='score')updateProgress()}
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.screen)));
+function svgWorld(i){
+ const colors=['#81785b','#658c6a','#9b9a5a','#a78055'];const c=colors[i];
+ const hills=`<g opacity=".86"><path d="M0 375 Q145 286 340 357 Q510 308 670 364 Q830 295 1000 377 V530 H0Z" fill="${c}"/></g>`;
+ const cave=`<g class="world"><path d="M75 360 L112 217 Q195 158 306 245 L342 372Z" fill="#827e74" stroke="#4c4c47" stroke-width="9"/><path d="M155 369 L163 269 Q220 219 267 285 L277 369Z" fill="#222f36"/><path d="M167 287 Q215 249 255 289" fill="none" stroke="#4b504f" stroke-width="6"/><path d="M128 270 l30 -35 l19 16 l-14 31Z" fill="#a8a194" opacity=".7"/><path d="M285 280 l12 -26 l17 31Z" fill="#aaa091"/></g>`;
+ const tent=`<g class="world"><path d="M110 352 L198 206 L300 352Z" fill="#8d7053" stroke="#433a32" stroke-width="6"/><path d="M198 206 L300 352 L212 344Z" fill="#5d4c3f"/><path d="M184 352 L201 284 L229 352Z" fill="#27353b"/><path d="M103 352 H309" stroke="#433527" stroke-width="10"/><path d="M198 204 L198 168" stroke="#463728" stroke-width="8"/></g>`;
+ const hut=`<g class="world"><path d="M104 250 L219 190 L328 250 V383 H104Z" fill="#b18b59" stroke="#5f4a38" stroke-width="7"/><path d="M78 253 L218 132 L347 253Z" fill="#6b4a36" stroke="#402e2a" stroke-width="9"/><path d="M110 242 L217 158 L324 242Z" fill="#936345"/><path d="M187 385 V303 Q217 270 245 303 V385Z" fill="#3c322b"/><path d="M137 275 H170 V315 H137Z" fill="#c9d5b8"/></g>`;
+ const metal=`<g class="world"><path d="M100 249 L215 193 L320 248 V388 H100Z" fill="#9c7d5d" stroke="#5d4633" stroke-width="7"/><path d="M80 248 L210 135 L345 248Z" fill="#4d4846" stroke="#2d3539" stroke-width="9"/><path d="M167 388 V312 H247 V388" fill="#383632"/><rect x="260" y="205" width="24" height="-60" fill="#72645b"/><path d="M267 139 q-16 -52 8 -87" fill="none" stroke="#c4b4a4" stroke-width="14" opacity=".5"/></g>`;
+ const foreground=i===0?`<g class="world"><path d="M420 397 l42 -66 l48 66" fill="none" stroke="#bdb5a4" stroke-width="7"/><ellipse cx="462" cy="404" rx="62" ry="15" fill="#38362e"/><path d="M432 403 q30 -76 46 0" fill="#d88938"/><path d="M452 400 q22 -103 30 0" fill="#e2b455"/><path d="M650 387 l47 -28 l-18 61 l-32 2Z" fill="#8f9186" stroke="#343b37" stroke-width="4"/></g>`:i===1?`<g class="world"><path d="M550 373 Q675 354 791 395" stroke="#efdfbd" stroke-width="6" fill="none"/><path d="M641 348 l-18 63 M675 348 l-18 63" stroke="#4c3825" stroke-width="8"/><path d="M697 414 l28 -20 l8 20 l-28 14Z" fill="#c3c3a5"/><path d="M522 411 q24 -18 48 0" stroke="#d2ab85" stroke-width="13" fill="none"/></g>`:i===2?`<g class="world"><path d="M425 410 Q560 332 719 402" fill="#8fba61" stroke="#567044" stroke-width="6"/><g stroke="#d1a55e" stroke-width="4">${Array.from({length:10},(_,k)=>`<path d="M${444+k*24} 395 l-5 -40 m5 30 l-12 -12 m12 2 l12 -14"/>`).join('')}</g><ellipse cx="772" cy="387" rx="30" ry="18" fill="#b2a48a"/><path d="M796 383 l17 -22" stroke="#b2a48a" stroke-width="12"/><circle cx="811" cy="358" r="12" fill="#b2a48a"/></g>`:`<g class="world"><rect x="619" y="365" width="140" height="55" rx="17" fill="#473a31" stroke="#a68f73" stroke-width="7"/><path d="M643 390 q35 -74 75 0" fill="#ff9d3b"/><path d="M659 390 q22 -52 40 0" fill="#ffe38a"/><path d="M675 380 v-80" stroke="#b7ac98" stroke-width="11"/><path d="M672 300 l15 -15" stroke="#bab1a3" stroke-width="8"/><g fill="#7f6550"><ellipse cx="500" cy="413" rx="33" ry="16"/><ellipse cx="536" cy="401" rx="22" ry="14"/></g></g>`;
+ const people=`<g opacity=".85"><circle cx="368" cy="363" r="12" fill="#50392c"/><path d="M363 374 l-8 40 l30 0 l-7 -40Z" fill="#9e6e4e"/><path d="M361 414 l-12 35 m23 -35 l14 35" stroke="#382e2a" stroke-width="7"/><circle cx="858" cy="379" r="12" fill="#50392c"/><path d="M850 391 l-4 42 l27 0 l-6 -42Z" fill="#ab8160"/><path d="M853 431 l-10 27 m22 -26 l8 25" stroke="#382e2a" stroke-width="7"/></g>`;
+ const trees=`<g opacity=".92"><path d="M890 320 v110" stroke="#483a30" stroke-width="16"/><circle cx="890" cy="297" r="44" fill="#527257"/><circle cx="859" cy="327" r="36" fill="#537953"/><circle cx="928" cy="324" r="38" fill="#3d654b"/></g>`;
+ return `<svg viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${hills}${trees}${[cave,tent,hut,metal][i]}${foreground}${people}<path d="M0 495 Q200 456 350 489 Q560 452 720 499 Q870 474 1000 480" stroke="#cbb48747" stroke-width="20" fill="none"/></svg>`;
 }
-
-function openGallery(key) {
-  const gallery = museumData[key];
-
-  document.getElementById("museum-subtitle").textContent = gallery.title;
-
-  document.getElementById("museum-exhibits").innerHTML =
-    gallery.exhibits.map((item, index) => `
-      <div class="card exhibit-card" onclick="openExhibit('${key}',${index})">
-        <div class="symbol">${item[0]}</div>
-        <h3>${item[1]}</h3>
-        <p>Sentuh objek untuk membuka nota.</p>
-      </div>
-    `).join("");
-
-  document.getElementById("museum-note-title").textContent =
-    "🔒 Nota belum dibuka";
-
-  document.getElementById("museum-note-content").textContent =
-    "Klik salah satu objek pameran untuk membaca nota.";
-}
-
-function openExhibit(key, index) {
-  const item = museumData[key].exhibits[index];
-
-  document.getElementById("museum-note-title").textContent =
-    item[0] + " " + item[1];
-
-  document.getElementById("museum-note-content").textContent = item[2];
-}
-
-renderMuseumGalleries();
-
-function go(id,button) {
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-
-  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
-  if(button) button.classList.add("active");
-  else {
-    const target = [...document.querySelectorAll(".nav-btn")]
-      .find(b=>b.getAttribute("onclick").includes("'"+id+"'"));
-    if(target) target.classList.add("active");
-  }
-  window.scrollTo(0,0);
-}
-
-function eraInfo(era) {
-  go("nota");
-  openGallery("ciri");
-
-  document.getElementById("museum-subtitle").textContent =
-    "Anda memilih Zaman " + era +
-    ". Klik objek pameran untuk meneroka ciri kehidupan manusia.";
-}
-
-function artifact(name,info) {
-  document.getElementById("artifact-result").textContent=name+" — "+info;
-}
-
-function answer(button,correct) {
-  document.querySelectorAll(".option").forEach(b=>{
-    b.disabled=true;
-    b.classList.remove("wrong","correct");
-  });
-  button.classList.add(correct?"correct":"wrong");
-  const feedback=document.getElementById("quiz-feedback");
-  feedback.textContent=correct
-    ?"✓ Tepat! Pertanian dan penternakan berkait dengan perkembangan petempatan lebih kekal."
-    :"✕ Kurang tepat. Fikirkan hubungan antara penghasilan makanan dengan keperluan berpindah.";
-  localStorage.setItem("educlass-demo-answer",correct?"1":"0");
-  updateProgress();
-}
-
-function updateProgress() {
-  const completed=localStorage.getItem("educlass-demo-answer")==="1";
-  const percent=completed?100:0;
-  document.getElementById("progress-label").textContent=percent+"% latihan contoh";
-  document.getElementById("progress-fill").style.width=percent+"%";
-  document.getElementById("result-bar").style.width=percent+"%";
-  document.getElementById("result-text").textContent=
-    completed?"Latihan contoh: Jawapan tepat.":"Latihan contoh belum dijawab dengan tepat.";
-}
-
-function previewFile(input) {
-  const f=input.files[0];
-  document.getElementById("file-preview").textContent =
-    f?"Fail dipilih: "+f.name+" ("+Math.round(f.size/1024)+" KB)":"Belum ada fail dipilih.";
-}
-updateProgress();
-</script>
-</body>
-</html>
+function renderEra(i){era=(i+4)%4;let e=eras[era];let s=document.getElementById('scene');s.dataset.era=era;document.getElementById('sceneart').innerHTML=svgWorld(era);document.getElementById('eraPeriod').textContent=e.period;document.getElementById('eraButtons').innerHTML=eras.map((x,n)=>`<button class="era-btn ${n===era?'active':''}" onclick="renderEra(${n})">${x.icon} ${x.name}</button>`).join('');document.getElementById('hotspots').innerHTML=e.hotspots.map((a,n)=>`<button style="left:${a[2]}%;top:${a[3]}%;animation-delay:${n*.32}s" class="hotspot ${visited.has('era'+era+a[4])?'visited':''}" onclick="openEraNote('${a[4]}')"><span class="dot">${a[0]}</span>${a[1]}</button>`).join('');updateProgress()}
+function openEraNote(key){const a=aspects[key]||aspects.ekonomi;let text=a[2][era];openNote({heading:a[0]+' · '+eras[era].name,section:'3.3 · '+eras[era].name,paragraphs:[text,'Lihat galeri 3.3 di bawah untuk membandingkan aspek ini merentas kesemua empat zaman.'],page:a[1],question:a[3]},'era'+era+key)}
+function selectGallery(i){gallery=i;let g=galleries[i];document.getElementById('galleryTabs').innerHTML=galleries.map((x,n)=>`<button class="gallerytab ${n===i?'selected':''}" onclick="selectGallery(${n})">${x.icon} ${x.id}</button>`).join('');document.getElementById('galleryTitle').textContent=g.id+' '+g.name;document.getElementById('galleryDesc').textContent=g.desc;document.getElementById('galleryCount').textContent=g.items.length+' pameran';document.getElementById('galleryObjects').innerHTML=g.items.map((x,n)=>`<button class="tile" onclick="openGalleryNote(${n})"><span class="emoji">${x[0]}</span><h3>${x[1]} ${visited.has('gal'+i+'-'+n)?'✓':''}</h3><p>Klik untuk membuka kapsul nota · hlm. ${x[2]}</p><div class="detail">BUKA PENEMUAN ↗</div></button>`).join('')}
+function openGalleryNote(n){let item=galleries[gallery].items[n];openNote({heading:item[1],section:galleries[gallery].id+' '+galleries[gallery].name,paragraphs:item[3],page:item[2],question:item[4]},'gal'+gallery+'-'+n)}
+function openNote(note,key){visited.add(key);save();document.getElementById('noteSection').textContent=note.section;document.getElementById('noteHeading').textContent=note.heading;document.getElementById('noteBody').innerHTML=note.paragraphs.map(s=>`<p>• ${escapeHTML(s)}</p>`).join('');document.getElementById('noteSource').textContent='📚 Sumber: Buku Teks Sejarah Tingkatan 1, Bab 3, halaman '+note.page+'. Isi diparafrasa untuk tujuan pembelajaran.';document.getElementById('noteQuestion').textContent='🧠 Fikirkan: '+note.question;document.getElementById('drawer').classList.add('open');document.getElementById('closeDrawer').focus();renderEra(era);selectGallery(gallery);updateProgress()}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function closeNote(){document.getElementById('drawer').classList.remove('open')}
+document.getElementById('closeDrawer').onclick=closeNote;document.getElementById('drawer').addEventListener('click',e=>{if(e.target.id==='drawer')closeNote()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNote()});document.getElementById('prevEra').onclick=()=>renderEra(era-1);document.getElementById('nextEra').onclick=()=>renderEra(era+1);
+function updateProgress(){let max=eras.reduce((a,e)=>a+e.hotspots.length,0)+galleries.reduce((a,g)=>a+g.items.length,0);let completed=visited.size;document.getElementById('exploredText').textContent='Penemuan diteroka: '+completed+' / '+max;document.getElementById('exploredBar').style.width=Math.min(100,completed/max*100)+'%';document.getElementById('scoreNum').textContent=completed+' / '+max+' penemuan';document.getElementById('scoreBar').style.width=Math.min(100,completed/max*100)+'%'}
+document.getElementById('resetProgress').onclick=()=>{if(confirm('Reset semua tanda penemuan pada browser ini?')){visited.clear();save();renderEra(era);selectGallery(gallery);updateProgress()}};
+document.getElementById('homeEras').innerHTML=eras.map((e,i)=>`<button class="tile" onclick="navigate('museum');renderEra(${i})"><span class="emoji">${e.icon}</span><h3>${e.name}</h3><p>${e.hint}</p><div class="detail">JELAJAHI ZAMAN →</div></button>`).join('');
+const samples=[['🪨','Alat batu','Alat batu penting sebagai bukti penggunaan teknologi awal manusia.'],['🏺','Tembikar','Tembikar menjadi bukti kemahiran menghasilkan bekas dan hasil seni.'],['🎨','Lukisan gua','Lukisan gua memberi petunjuk kepada cara hidup, kegiatan dan kebudayaan.'],['⚒️','Alat logam','Penemuan alat gangsa atau besi menunjukkan perkembangan teknologi.'],['⚱️','Pengebumian','Tinggalan perkuburan membantu memahami kepercayaan masyarakat dahulu.'],['🌾','Biji tanaman','Ekofak seperti sisa tanaman boleh menunjukkan kegiatan mendapatkan makanan.']];document.getElementById('exploreObjects').innerHTML=samples.map((s,i)=>`<button class="tile" onclick="openNote({heading:'${s[1]}',section:'MISI ARKEOLOGI',paragraphs:['${s[2]}'],page:52,question:'Apakah yang boleh kamu tafsir daripada bukti ini?'},'exp${i}')"><span class="emoji">${s[0]}</span><h3>${s[1]}</h3><p>Klik untuk menyiasat penemuan</p><span class="detail">BUKA BUKTI ↗</span></button>`).join('');
+const questions=[{q:'Apakah maksud Zaman Prasejarah?',a:['Zaman selepas tulisan wujud','Zaman sebelum manusia mengenal tulisan','Zaman kerajaan awal'],correct:1,explain:'Prasejarah atau nirleka merujuk kepada zaman sebelum sistem tulisan.'},{q:'Apakah yang semakin berkembang pada Zaman Neolitik?',a:['Pertanian dan penternakan','Penggunaan komputer','Perindustrian moden'],correct:0,explain:'Aktiviti pertanian, penternakan dan petempatan lebih kekal berkembang pada Neolitik.'},{q:'Tapak manakah berkaitan dengan penemuan Perak Man?',a:['Stonehenge','Ban Chiang','Lenggong, Perak'],correct:2,explain:'Lenggong, Perak terkenal dengan penemuan rangka Perak Man.'}];
+function showQuiz(){let box=document.getElementById('quizArea');if(qa>=questions.length){box.innerHTML=`<h2>Tamat Ekspedisi! 🎉</h2><p>Markah ${scoreQuiz} / ${questions.length}</p><button class="btn" onclick="qa=0;scoreQuiz=0;showQuiz()">Ulang kuiz</button>`;return}let q=questions[qa];box.innerHTML=`<span class="pill">SOALAN ${qa+1} / ${questions.length}</span><h2>${q.q}</h2>`+q.a.map((x,i)=>`<button class="quiz-choice" onclick="quizAnswer(${i},this)">${String.fromCharCode(65+i)}. ${x}</button>`).join('');document.getElementById('quizFeedback').textContent=''}
+function quizAnswer(i,el){let q=questions[qa];document.querySelectorAll('.quiz-choice').forEach(x=>x.disabled=true);el.classList.add(i===q.correct?'good':'bad');if(i===q.correct)scoreQuiz++;document.getElementById('quizFeedback').innerHTML=`<p>${i===q.correct?'✅ Tepat!':'❌ Belum tepat.'} ${q.explain}</p><button class="btn tiny" onclick="qa++;showQuiz()">${qa===questions.length-1?'Lihat keputusan':'Soalan seterusnya →'}</button>`}
+document.getElementById('file').addEventListener('change',e=>{let f=e.target.files[0];document.getElementById('fileName').textContent=f?'Fail dipilih: '+f.name+' — belum dihantar.':'Belum ada fail dipilih.'});renderEra(0);selectGallery(0);showQuiz();updateProgress();
+</script></body></html>
