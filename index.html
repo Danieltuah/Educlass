@@ -176,11 +176,71 @@ else task+=`<div class="kq-choicegrid">${q.options.map((o,i)=>`<button class="kq
 task+=`<label for="kqReason" style="display:block;margin-top:13px">🧠 Jelaskan alasan pilihan kamu (minimum 15 aksara)</label><textarea id="kqReason" placeholder="Saya memilih jawapan ini kerana bukti menunjukkan..."></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="kq-primary" onclick="kqSubmit()">Semak jawapan</button><button class="kq-secondary" onclick="kqShowHint()">💡 Petunjuk</button></div><div id="kqHint" class="kq-hint" hidden></div><div id="kqFeedback"></div></div>`;
 }
 task+='</div>';document.getElementById('kqPlay').innerHTML=stage+task;kqRefreshBoards()}
-function kqArtifact(i){let q=kqQuestions[kqQuestion], zone=kqZones[kqZone];document.getElementById('kqArtifactText').textContent=['🔎 Perhatikan bahan, tempat dan cara artifak digunakan sebelum meneka.','🧩 Bukti sejarah perlu ditafsir bersama konteks penemuan.','📚 Hubungkan bukti ini dengan subtopik '+q.tags.join(', ')+' di Muzium Digital.'][i]||'Lihat semula bukti.'}
+
+function kqArtifact(i) {
+  const q = kqQuestions[kqQuestion];
+  const area = document.getElementById("kqArtifactText");
+  if (!q || !area) return;
+
+  const clues = [
+    "🔎 PETUNJUK 1 — BUKTI\n" +
+    "Perhatikan objek dan maklumat dalam soalan: " +
+    q.q,
+
+    "🧩 PETUNJUK 2 — HUBUNG KAIT\n" +
+    "Soalan ini melibatkan subtopik " +
+    q.tags.join(", ") +
+    ". Bandingkan bukti dengan fakta yang telah dipelajari.",
+
+    "💡 PETUNJUK 3 — BANTUAN BERFIKIR\n" +
+    q.hint
+  ];
+
+  area.textContent = clues[i] || clues[0];
+  area.style.whiteSpace = "pre-line";
+  area.style.borderColor = "#f3ca78";
+
+  area.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+  kqHintShown = true;
+}
+
 function kqSelectAnswer(i){if(kqPending)return;kqCurrentChoices[kqQuestion]=i;document.querySelectorAll('.kq-answer').forEach((b,j)=>{b.style.borderColor=j===i?'#f5c477':'#62798b';b.style.background=j===i?'#46513d':'#233747'})}
 function kqSelectOrder(i){let q=kqQuestions[kqQuestion],v=q.options[i];if(kqOrder.includes(v))return;kqOrder.push(v);document.getElementById('kqRank'+i).classList.add('used');document.getElementById('kqOrderStatus').textContent=kqOrder.join(' → ')}
 function kqResetOrder(){kqOrder=[];document.querySelectorAll('.kq-rank button').forEach(x=>x.classList.remove('used'));document.getElementById('kqOrderStatus').textContent='Urutan pilihan: belum ada.'}
-function kqShowHint(){let el=document.getElementById('kqHint');el.hidden=false;el.textContent='💡 '+kqQuestions[kqQuestion].hint;kqHintShown=true}
+
+function kqShowHint() {
+  const q = kqQuestions[kqQuestion];
+  const el = document.getElementById("kqHint");
+
+  if (!q || !el) {
+    alert("Petunjuk tidak dapat dipaparkan.");
+    return;
+  }
+
+  el.hidden = false;
+  el.style.display = "block";
+
+  el.textContent = "💡 PETUNJUK MISI\n\n" + q.hint;
+
+  el.style.whiteSpace = "pre-line";
+  el.style.background = "#3d3542";
+  el.style.color = "#ffffff";
+  el.style.padding = "18px";
+  el.style.border = "2px solid #e8ba67";
+  el.style.borderRadius = "12px";
+
+  kqHintShown = true;
+
+  el.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
+
 function kqSubmit(){if(kqPending)return;let q=kqQuestions[kqQuestion],why=(document.getElementById('kqReason')?.value||'').trim();if(why.length<15){alert('Tulis alasan sekurang-kurangnya 15 aksara supaya jawapan kamu boleh dinilai oleh guru.');return}let choice=q.type==='order'?kqOrder:kqCurrentChoices[kqQuestion];if(q.type==='order'&&kqOrder.length!==4){alert('Susun semua empat zaman dahulu.');return}if(q.type!=='order'&&!Number.isInteger(choice)){alert('Pilih satu jawapan dahulu.');return}let correct=q.type==='order'?JSON.stringify(choice)===JSON.stringify(q.correct):choice===q.correct;let profile=kqProfile(),r=profile.records[String(kqQuestion)]||{tries:0,reflections:[],hints:0};r.tries++;r.lastReason=why;r.lastChoice=choice;r.hints+=kqHintShown?1:0;let area=document.getElementById('kqFeedback');kqPending=true;
 if(correct){r.done=true;r.reason=why;r.xp=r.tries===1&&!r.hints?10:r.tries===2?7:5;r.when=new Date().toISOString();profile.records[String(kqQuestion)]=r;kqSave();area.innerHTML=`<div class="kq-message">✅ Tepat! +${r.xp} XP<br>${kqEscape(q.why)}<p>Alasan kamu telah direkod untuk semakan guru (belum dinilai secara automatik).</p></div><button class="kq-primary" style="margin-top:11px" onclick="kqAdvance()">${kqQuestion===19?'🏆 Tamat Misi':'Sambung Misi →'}</button>`;kqRenderZones();let n=kqCount(),f=kqZones.filter((z,i)=>kqCompleteZone(i)).length;document.getElementById('kqPoints').textContent=kqXP()+' XP';document.getElementById('kqSolved').textContent=n+' / 20';document.getElementById('kqFragments').textContent=f+' / 5';kqRefreshBoards()}
 else{profile.records[String(kqQuestion)]=r;kqSave();area.innerHTML=`<div class="kq-message fail">❌ Bukti yang kamu pilih belum menyokong kesimpulan itu. Cuba periksa petunjuk dan nota semula. Kamu belum kehilangan peluang untuk menyelesaikan misi.</div><label for="kqReflection" style="display:block;margin-top:12px">✍️ Refleksi: apakah kemungkinan kesilapan penaakulan kamu?</label><textarea id="kqReflection" placeholder="Saya perlu semak semula bukti ..."></textarea><button class="kq-secondary" onclick="kqRetry()" style="margin-top:9px">Simpan refleksi & cuba semula</button>`;kqRefreshBoards()}}
